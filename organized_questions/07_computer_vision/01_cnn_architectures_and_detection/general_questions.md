@@ -1,4 +1,9 @@
 # Computer Vision Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/13** | **0** | **13** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

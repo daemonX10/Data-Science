@@ -1,4 +1,9 @@
 # Deep Learning Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/139** | **0** | **139** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: What is an artificial neural network?
 - [ ] Done

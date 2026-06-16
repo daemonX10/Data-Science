@@ -1,4 +1,9 @@
 # Linear Algebra Interview Questions - Coding Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **1/9** | **1** | **9** | **11%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [x] Done

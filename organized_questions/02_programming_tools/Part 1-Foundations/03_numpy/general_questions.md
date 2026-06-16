@@ -1,4 +1,9 @@
 # NumPy Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/11** | **0** | **11** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

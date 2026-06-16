@@ -1,4 +1,9 @@
 # Time Series Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **15/24** | **15** | **24** | **62%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [x] Done

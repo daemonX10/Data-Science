@@ -111,6 +111,12 @@ import numpy as np
 from scipy import stats, optimize
 
 # NumPy — array operations, basic math
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/15** | **0** | **15** | **0%** |
+<!-- progress-summary:end -->
+
 arr = np.array([1, 2, 3, 4, 5])
 print(np.mean(arr), np.std(arr))
 

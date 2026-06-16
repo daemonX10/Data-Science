@@ -1,4 +1,9 @@
 # Transfer Learning Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/8** | **0** | **8** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

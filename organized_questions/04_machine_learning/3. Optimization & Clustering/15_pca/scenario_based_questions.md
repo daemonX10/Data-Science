@@ -1,4 +1,9 @@
 # Pca Interview Questions - Scenario_Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/8** | **0** | **8** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

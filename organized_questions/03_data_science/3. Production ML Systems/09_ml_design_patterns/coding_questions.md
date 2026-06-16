@@ -46,6 +46,12 @@ class DataSnapshot:
     def save(self, X: np.ndarray, y: np.ndarray, name: str) -> str:
         """Save data snapshot and return version hash"""
         # Create hash from data content
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/13** | **0** | **13** | **0%** |
+<!-- progress-summary:end -->
+
         data_bytes = X.tobytes() + y.tobytes()
         version = hashlib.sha256(data_bytes).hexdigest()[:12]
         

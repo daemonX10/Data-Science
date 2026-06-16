@@ -1,4 +1,9 @@
 # Explainable AI (XAI) - Interview Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/385** | **0** | **385** | **0%** |
+<!-- progress-summary:end -->
 
 1. What is Explainable AI (XAI), and why is it important?
 

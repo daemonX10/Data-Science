@@ -1,4 +1,9 @@
 # Text Understanding (Classification, Sentiment, Topic Modeling) - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/300** | **0** | **300** | **0%** |
+<!-- progress-summary:end -->
 
 ## Core Questions
 

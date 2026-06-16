@@ -16,8 +16,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(BASE_DIR, 'PROGRESS.md')
 
 QUESTION_RE = re.compile(r'^(#{2,3})\s+(Question\s+\d+.*)', re.IGNORECASE)
-DONE_RE = re.compile(r'^- \[x\] Done', re.IGNORECASE)
+DONE_RE = re.compile(r'^-\s*\[x\]\s*done\b', re.IGNORECASE)
 BOLD_TEXT_RE = re.compile(r'^\*\*(.+?)\*\*\s*$')
+
+SUMMARY_START = '<!-- progress-summary:start -->'
+SUMMARY_END = '<!-- progress-summary:end -->'
 
 FOLDER_PREFIXES = tuple(f"{i:02d}_" for i in range(1, 12))
 
@@ -78,16 +81,21 @@ def heading_to_anchor(heading_text: str) -> str:
 
 
 def scan_file_detailed(filepath: str) -> list:
-    """Returns list of (heading_text, is_done, question_title) for each question."""
+    """Returns list of (heading_text, is_done, q_num, q_title) for each question."""
     questions = []
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
-    for i, line in enumerate(lines):
-        m = QUESTION_RE.match(line.rstrip())
+    question_indices = [
+        i for i, line in enumerate(lines) if QUESTION_RE.match(line.rstrip())
+    ]
+
+    for idx, i in enumerate(question_indices):
+        m = QUESTION_RE.match(lines[i].rstrip())
         if m:
             heading_text = m.group(2).strip()  # e.g. "Question 1: What is..." or "Question 1"
-            is_done = (i + 1 < len(lines) and DONE_RE.match(lines[i + 1].strip()))
+            end = question_indices[idx + 1] if idx + 1 < len(question_indices) else len(lines)
+            is_done = any(DONE_RE.match(lines[j].strip()) for j in range(i + 1, end))
 
             # Extract a short title for display
             # Case 1: Title in heading "Question 1: What is PCA?"
@@ -139,6 +147,65 @@ def group_files_by_subtopic(file_map: OrderedDict) -> OrderedDict:
     return groups
 
 
+def build_file_summary(done: int, total: int) -> list:
+    p = pct(done, total)
+    return [
+        SUMMARY_START,
+        '| Progress | Done | Total | % |',
+        '|:--------:|----:|------:|--:|',
+        f'| **{done}/{total}** | **{done}** | **{total}** | **{p:.0f}%** |',
+        SUMMARY_END,
+    ]
+
+
+def update_file_summary(filepath: str, done: int, total: int) -> None:
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            lines = f.read().splitlines()
+    except OSError:
+        return
+
+    summary_block = build_file_summary(done, total)
+    start_idx = None
+    end_idx = None
+
+    for i, line in enumerate(lines):
+        if line.strip() == SUMMARY_START:
+            start_idx = i
+            break
+
+    if start_idx is not None:
+        for j in range(start_idx + 1, len(lines)):
+            if lines[j].strip() == SUMMARY_END:
+                end_idx = j
+                break
+
+    if start_idx is not None and end_idx is None:
+        lines = lines[:start_idx] + lines[start_idx + 1:]
+        start_idx = None
+
+    if start_idx is not None and end_idx is not None:
+        new_lines = lines[:start_idx] + summary_block + lines[end_idx + 1:]
+        block_start = start_idx
+    else:
+        title_idx = None
+        for i, line in enumerate(lines):
+            if re.match(r'^\s*#\s+\S', line):
+                title_idx = i
+                break
+        insert_at = title_idx + 1 if title_idx is not None else 0
+        new_lines = lines[:insert_at] + summary_block + lines[insert_at:]
+        block_start = insert_at
+
+    after_block = block_start + len(summary_block)
+    if after_block < len(new_lines) and new_lines[after_block].strip() != '':
+        new_lines.insert(after_block, '')
+
+    if new_lines != lines:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(new_lines) + '\n')
+
+
 def main():
     # section_key -> OrderedDict{ rel_path: [question_list] }
     sections = OrderedDict()
@@ -160,6 +227,13 @@ def main():
             if top_folder not in sections:
                 sections[top_folder] = OrderedDict()
             sections[top_folder][rel_path] = questions
+
+    for file_map in sections.values():
+        for rel_path, questions in file_map.items():
+            file_done = sum(1 for _, d, _, _ in questions if d)
+            file_total = len(questions)
+            abs_path = os.path.join(BASE_DIR, rel_path.replace('/', os.sep))
+            update_file_summary(abs_path, file_done, file_total)
 
     grand_done = sum(
         sum(1 for _, done, _, _ in qs if done)

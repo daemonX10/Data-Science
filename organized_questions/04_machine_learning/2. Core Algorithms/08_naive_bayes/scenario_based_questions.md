@@ -1,4 +1,9 @@
 # Naive Bayes Interview Questions - Scenario-Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/3** | **0** | **3** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

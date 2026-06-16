@@ -1,4 +1,9 @@
 # Segmentation & Vision Transformers - Interview Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/201** | **0** | **201** | **0%** |
+<!-- progress-summary:end -->
 
 ## Semantic Segmentation
 

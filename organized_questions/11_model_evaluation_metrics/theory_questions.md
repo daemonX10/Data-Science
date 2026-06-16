@@ -1,4 +1,9 @@
 # Accuracy/Precision/Recall/F1-Score - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/450** | **0** | **450** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

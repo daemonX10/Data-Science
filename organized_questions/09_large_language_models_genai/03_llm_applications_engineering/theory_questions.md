@@ -1,4 +1,9 @@
 # LLM Applications & Engineering - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/163** | **0** | **163** | **0%** |
+<!-- progress-summary:end -->
 
 ## Prompt Engineering Fundamentals
 

@@ -1,4 +1,9 @@
 # GANs Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/19** | **0** | **19** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

@@ -160,6 +160,12 @@ import cv2
 import numpy as np
 
 # Load grayscale image
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/545** | **0** | **545** | **0%** |
+<!-- progress-summary:end -->
+
 img = cv2.imread('image.jpg', cv2.IMREAD_GRAYSCALE)
 
 # Sobel edges

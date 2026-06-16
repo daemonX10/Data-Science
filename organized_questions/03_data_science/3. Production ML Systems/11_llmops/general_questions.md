@@ -1,3 +1,9 @@
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/15** | **0** | **15** | **0%** |
+<!-- progress-summary:end -->
+
 ﻿# Llmops Interview Questions - General Questions
 
 ## Question 1

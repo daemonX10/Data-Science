@@ -1,4 +1,9 @@
 # Unsupervised Learning - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/30** | **0** | **30** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: Describe the K-means clustering algorithm and how it operates.
 - [ ] Done

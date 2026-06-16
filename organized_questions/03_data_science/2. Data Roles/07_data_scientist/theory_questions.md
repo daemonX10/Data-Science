@@ -1,4 +1,9 @@
 # Data Scientist Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/99** | **0** | **99** | **0%** |
+<!-- progress-summary:end -->
 
 ## Table of Contents
 

@@ -1,4 +1,9 @@
 # Supervised Learning Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/45** | **0** | **45** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

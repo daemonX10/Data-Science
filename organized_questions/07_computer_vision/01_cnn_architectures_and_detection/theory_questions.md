@@ -1,4 +1,9 @@
 # CNN Architectures, Classification & Object Detection - Interview Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/199** | **0** | **199** | **0%** |
+<!-- progress-summary:end -->
 
 ## CNN Architecture Fundamentals
 

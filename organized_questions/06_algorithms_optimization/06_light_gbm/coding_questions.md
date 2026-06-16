@@ -1,4 +1,9 @@
 # Light Gbm Interview Questions - Coding Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/7** | **0** | **7** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

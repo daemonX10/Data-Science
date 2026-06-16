@@ -1,4 +1,9 @@
 # Apache Spark Interview Questions - Scenario Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/12** | **0** | **12** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

@@ -1,4 +1,9 @@
 # XGBoost Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/9** | **0** | **9** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

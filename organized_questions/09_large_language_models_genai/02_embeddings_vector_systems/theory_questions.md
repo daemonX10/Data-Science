@@ -1,4 +1,9 @@
 # Embeddings & Vector Systems - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/155** | **0** | **155** | **0%** |
+<!-- progress-summary:end -->
 
 ## Embedding Fundamentals
 

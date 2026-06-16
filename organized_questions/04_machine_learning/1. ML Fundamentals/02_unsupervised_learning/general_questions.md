@@ -1,4 +1,9 @@
 # Unsupervised Learning - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/15** | **0** | **15** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: What is unsupervised learning and how does it differ from supervised learning?
 - [ ] Done

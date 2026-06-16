@@ -1,4 +1,9 @@
 # Transfer Learning Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/18** | **0** | **18** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

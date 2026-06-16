@@ -1,4 +1,9 @@
 # K Nearest Neighbors Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/105** | **0** | **105** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

@@ -1,4 +1,9 @@
 # Text Generation (Seq2Seq, Translation, QA, Summarization) - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/200** | **0** | **200** | **0%** |
+<!-- progress-summary:end -->
 
 ## Core Questions
 

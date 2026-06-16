@@ -1,4 +1,9 @@
 # Transfer Learning Interview Questions - Scenario-Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/6** | **0** | **6** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

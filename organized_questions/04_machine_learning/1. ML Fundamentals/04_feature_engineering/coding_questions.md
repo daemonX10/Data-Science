@@ -1,4 +1,9 @@
 # Feature Engineering Interview Questions - Coding Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/10** | **0** | **10** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: Write a function to normalize a feature vector using Min-Max normalization.
 - [ ] Done

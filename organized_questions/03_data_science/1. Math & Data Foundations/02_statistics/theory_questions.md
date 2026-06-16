@@ -406,6 +406,12 @@ For continuous variables, P(X = exactly 1.5) = 0 because there are infinite poss
 ```python
 from scipy import stats
 # Discrete: P(X = 3) for Binomial(n=10, p=0.5)
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/462** | **0** | **462** | **0%** |
+<!-- progress-summary:end -->
+
 print(stats.binom.pmf(3, n=10, p=0.5))  # 0.117
 
 # Continuous: P(0 < X < 1) for Standard Normal
@@ -2827,1179 +2833,2170 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-# --- Missing Questions Restored from Source (Q59-Q548) ---
+# --- Missing Questions Restored from Source (Q59-Q520) ---
 
 ## Question 59
 - [ ] Done
 
-**In a bimodal distribution of customer purchase amounts, how do you interpret the mean and median?**
+**How do you calculate the geometric mean for investment returns and when is it more appropriate than arithmetic mean?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definition:**
+The geometric mean accounts for compounding and is the correct average return over multiple periods.
+
+**Formula:**
+If returns are $r_1, r_2, ..., r_n$ (as decimals), then:
+$$G = \left(\prod_{i=1}^{n} (1 + r_i)\right)^{1/n} - 1$$
+
+**When to Use:**
+- **Use geometric mean** for multi-period investment performance or growth rates.
+- **Use arithmetic mean** for expected return in a single period across many trials.
+
+**Python Example:**
+```python
+import numpy as np
+
+returns = np.array([0.10, -0.05, 0.08])  # 10%, -5%, 8%
+gmean = np.prod(1 + returns) ** (1 / len(returns)) - 1
+print(f"Geometric mean: {gmean:.4f}")
+```
 
 ---
 
 ## Question 60
 - [ ] Done
 
-**How do you calculate the geometric mean for investment returns and when is it more appropriate than arithmetic mean?**
+**What's the relationship between trimmed mean and median, and when would you use each?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definition:**
+A trimmed mean removes a fixed percentage of the smallest and largest values before averaging. The median is the 50th percentile.
+
+**Relationship:**
+- As trimming increases, the trimmed mean moves toward the median.
+- Median ignores magnitude of extremes; trimmed mean still uses most data values.
+
+**When to Use:**
+- **Trimmed mean:** Moderate outliers but still want a mean-like estimate.
+- **Median:** Strong skew or extreme outliers; want a robust typical value.
 
 ---
 
 ## Question 61
 - [ ] Done
 
-**What's the relationship between trimmed mean and median, and when would you use each?**
+**How do you identify and handle the impact of seasonal effects on mean calculations in business metrics?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Identify Seasonality:**
+- Plot time series and seasonal subseries plots.
+- Compare month-over-month or week-over-week patterns.
+- Use decomposition (additive or multiplicative) to isolate seasonal component.
+
+**Handle Seasonality:**
+- Compute **seasonal means** (e.g., average for each month) instead of overall mean.
+- Use **seasonally adjusted** values (remove seasonal component) before averaging.
+- Compare **YoY means** (same season) rather than raw means.
+
+**Business Example:**
+Average daily sales should be compared within the same season (holiday vs non-holiday), or use a seasonally adjusted mean.
 
 ---
 
 ## Question 62
 - [ ] Done
 
-**How do you identify and handle the impact of seasonal effects on mean calculations in business metrics?**
+**In machine learning feature engineering, when would you replace missing values with mean vs. median vs. mode?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Guidelines:**
+- **Mean:** Numeric, roughly symmetric distribution, few outliers.
+- **Median:** Numeric, skewed distribution or outliers present.
+- **Mode:** Categorical variables or discrete values.
+
+**Best Practices:**
+- Impute within groups (e.g., by region or segment) if distributions differ.
+- Add a **missing indicator** feature to capture missingness patterns.
+- Validate with cross-validation; imputation can change model bias.
 
 ---
 
 ## Question 63
 - [ ] Done
 
-**In machine learning feature engineering, when would you replace missing values with mean vs. median vs. mode?**
+**How do you calculate the harmonic mean for rates (like speed or productivity metrics) and interpret results?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definition:**
+The harmonic mean is the correct average for rates when the denominator is constant (e.g., distance, tasks).
+
+**Formula:**
+$$H = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}}$$
+
+**Interpretation:**
+It gives the effective average rate. It is always less than or equal to the arithmetic mean and is pulled down by low rates.
+
+**Python Example:**
+```python
+import numpy as np
+
+speeds = np.array([60, 30, 90])  # km/h
+hmean = len(speeds) / np.sum(1 / speeds)
+print(f"Harmonic mean speed: {hmean:.2f}")
+```
 
 ---
 
 ## Question 64
 - [ ] Done
 
-**How do you calculate the harmonic mean for rates (like speed or productivity metrics) and interpret results?**
+**How does sample size affect the reliability of mean, median, and mode estimates?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Impact of Sample Size:**
+- **Mean:** Stabilizes quickly; standard error shrinks as $1/\sqrt{n}$.
+- **Median:** More robust but converges slower than mean in small samples.
+- **Mode:** Highly unstable for small samples, especially with continuous data.
+
+**Practical Guidance:**
+- Use confidence intervals or bootstrapping to quantify uncertainty.
+- For small $n$, prefer robust summaries and avoid over-interpreting the mode.
 
 ---
 
 ## Question 65
 - [ ] Done
 
-**When comparing mean, median, and mode across different groups, what statistical considerations must you account for?**
+**In quality control, how do you use control charts with mean and standard deviation to monitor process stability?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definition:**
+Control charts monitor whether a process stays within statistically expected variation.
+
+**Typical Approach:**
+- Compute process mean $\bar{x}$ and standard deviation $s$ from baseline data.
+- Set control limits at $\bar{x} \pm 3s$ (or use $\bar{x} \pm 3\sigma$ if population SD is known).
+- Plot sample means over time (X-bar chart) and watch for points outside limits or non-random patterns.
+
+**Signals of Instability:**
+- Any point outside control limits.
+- Runs or trends (e.g., 7 points on one side of mean).
+
+**Python Sketch:**
+```python
+import numpy as np
+
+samples = np.array([10.1, 9.9, 10.2, 10.0, 9.8, 10.3])
+mean = samples.mean()
+sd = samples.std(ddof=1)
+ucl, lcl = mean + 3 * sd, mean - 3 * sd
+print(mean, lcl, ucl)
+```
 
 ---
 
 ## Question 66
 - [ ] Done
 
-**How does sample size affect the reliability of mean, median, and mode estimates?**
+**How do you handle calculating central tendency measures for ordinal data (like Likert scales)?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Best Practices:**
+- **Median and mode** are most appropriate for ordinal data.
+- **Mean** can be used only if you assume equal intervals between categories (common but debated).
+
+**Reporting:**
+- Provide distribution percentages alongside median/mode.
+- Consider non-parametric tests (Mann-Whitney, Kruskal-Wallis) for comparisons.
 
 ---
 
 ## Question 67
 - [ ] Done
 
-**In quality control, how do you use control charts with mean and standard deviation to monitor process stability?**
+**What's the impact of data transformation (log, square root) on the relationship between mean and median?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Impact:**
+- Log or square-root transforms reduce right skew.
+- The transformed distribution becomes more symmetric, so mean and median get closer.
+
+**Interpretation Note:**
+- The mean of log-transformed data corresponds to a **geometric mean** on the original scale.
+- Back-transforming the mean is not the same as the mean of original data.
 
 ---
 
 ## Question 68
 - [ ] Done
 
-**How do you handle calculating central tendency measures for ordinal data (like Likert scales)?**
+**In experimental design, how do you choose between reporting mean differences vs. median differences?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Choose Mean Differences When:**
+- Data is approximately normal or sample size is large.
+- You care about average effect and parametric assumptions hold.
+
+**Choose Median Differences When:**
+- Data is skewed or has outliers.
+- You care about the typical participant outcome.
+
+**Statistical Tests:**
+- Mean difference: t-test/ANOVA.
+- Median difference: Mann-Whitney U or quantile regression.
 
 ---
 
 ## Question 69
 - [ ] Done
 
-**What's the impact of data transformation (log, square root) on the relationship between mean and median?**
+**How do you handle calculating mode for categorical variables with multiple equally frequent categories?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- If multiple categories tie for highest frequency, report **all modes** (multimodal).
+- If ties are common, report the full frequency table or top-k categories.
+
+**Note:** Do not force a single mode when the data is genuinely multimodal.
 
 ---
 
 ## Question 70
 - [ ] Done
 
-**How do you calculate confidence intervals around the mean and interpret them in business contexts?**
+**How do you calculate and interpret the mean absolute deviation as an alternative to standard deviation?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definition:**
+Mean absolute deviation (MAD) is the average absolute distance from the mean.
+
+**Formula:**
+$$MAD = \frac{1}{n} \sum_{i=1}^{n} |x_i - \bar{x}|$$
+
+**Interpretation:**
+It measures the typical absolute deviation in the original units. It is less sensitive to outliers than standard deviation because it does not square deviations.
+
+**Python Example:**
+```python
+import numpy as np
+
+data = np.array([10, 12, 9, 11, 100])
+mad = np.mean(np.abs(data - data.mean()))
+print(f"MAD: {mad:.2f}")
+```
 
 ---
 
 ## Question 71
 - [ ] Done
 
-**When dealing with right-skewed data (like income), why is median often preferred for policy decisions?**
+**In time-series forecasting, how do you use historical means to predict future values?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- **Stationary series:** Use the historical mean as a baseline forecast.
+- **Rolling mean:** Use the mean of the last $k$ observations to adapt to recent changes.
+- **Seasonal mean:** Use the average for the same season (e.g., average of all Januaries).
+
+**Formula (rolling mean):**
+$$\hat{y}_{t+1} = \frac{1}{k} \sum_{i=0}^{k-1} y_{t-i}$$
+
+**Use Case:**
+Historical mean forecasts are simple baselines to compare against more advanced models.
 
 ---
 
 ## Question 72
 - [ ] Done
 
-**How do you use the relationship between mean and median to assess data distribution shape?**
+**How do you apply bootstrapping techniques to estimate the sampling distribution of the mean?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Steps:**
+1. Sample with replacement from the data (size $n$).
+2. Compute the mean for each bootstrap sample.
+3. Repeat many times to build the sampling distribution.
+4. Use the distribution to estimate standard error and confidence intervals.
+
+**Python Example:**
+```python
+import numpy as np
+
+data = np.array([5, 7, 9, 10, 12])
+means = []
+for _ in range(10000):
+    sample = np.random.choice(data, size=len(data), replace=True)
+    means.append(sample.mean())
+
+boot_se = np.std(means, ddof=1)
+ci = (np.percentile(means, 2.5), np.percentile(means, 97.5))
+print(boot_se, ci)
+```
 
 ---
 
 ## Question 73
 - [ ] Done
 
-**In experimental design, how do you choose between reporting mean differences vs. median differences?**
+**When analyzing customer lifetime value, how do you choose between mean and median CLV?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Guidance:**
+- **Mean CLV:** Use when estimating total revenue or average value across the whole customer base.
+- **Median CLV:** Use to describe a typical customer, especially when CLV is right-skewed.
+
+**Practice:**
+Report both mean and median (plus percentiles) to capture skew and business impact.
 
 ---
 
 ## Question 74
 - [ ] Done
 
-**How do you handle calculating mode for categorical variables with multiple equally frequent categories?**
+**How do you calculate the mean of ratios vs. the ratio of means, and when does each apply?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definitions:**
+- **Mean of ratios:** $\frac{1}{n} \sum_{i=1}^{n} \frac{a_i}{b_i}$ (each unit weighted equally).
+- **Ratio of means:** $\frac{\sum a_i}{\sum b_i}$ (weighted by denominator size).
+
+**When to Use:**
+- **Ratio of means** for overall rates (e.g., total conversions / total visits).
+- **Mean of ratios** for average individual-level rates (e.g., average per-user conversion).
+
+**Key Point:**
+They can differ when denominators vary widely.
 
 ---
 
 ## Question 75
 - [ ] Done
 
-**What's the difference between sample mean and population mean, and how does this affect decision-making?**
+**In survey research, how do you handle calculating mean responses when some participants skip questions?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approaches:**
+- **Item-level mean:** Compute the mean using only valid responses for that item.
+- **Imputation:** Use mean/median imputation or multiple imputation if missingness is systematic.
+- **Report $n$:** Always report how many responses were used per item.
+
+**Best Practice:**
+Assess missingness (MCAR/MAR/MNAR) before choosing the method.
 
 ---
 
 ## Question 76
 - [ ] Done
 
-**How do you calculate and interpret the mean absolute deviation as an alternative to standard deviation?**
+**What's the impact of measurement precision on the accuracy of mean calculations?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Impact:**
+- Low precision (coarse rounding) increases measurement error and inflates variance.
+- Systematic measurement bias shifts the mean away from the true value.
+- Random error averages out with large $n$ but still widens confidence intervals.
+
+**Mitigation:**
+Use calibrated instruments, record more decimal precision, and increase sample size.
 
 ---
 
 ## Question 77
 - [ ] Done
 
-**In time-series forecasting, how do you use historical means to predict future values?**
+**How do you calculate and interpret the standard error of the mean in research studies?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Formula:**
+$$SE = \frac{s}{\sqrt{n}}$$
+
+**Interpretation:**
+SE is the standard deviation of the sampling distribution of the mean. Smaller SE means more precise mean estimates.
+
+**Python Example:**
+```python
+import numpy as np
+from scipy import stats
+
+data = np.array([10, 12, 9, 11, 10])
+se = stats.sem(data)
+print(se)
+```
 
 ---
 
 ## Question 78
 - [ ] Done
 
-**How do you apply bootstrapping techniques to estimate the sampling distribution of the mean?**
+**In business analytics, how do you use rolling means to identify trends in KPIs?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Compute a moving average over a fixed window (e.g., 7-day or 30-day).
+- Plot rolling mean alongside raw KPI to smooth noise.
+- Compare windows to detect trend changes.
+
+**Note:**
+Larger windows smooth more but respond slower to shifts.
 
 ---
 
 ## Question 79
 - [ ] Done
 
-**When analyzing customer lifetime value, how do you choose between mean and median CLV?**
+**How do you handle extreme values when calculating mean in robust statistical analysis?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Robust Options:**
+- Use **trimmed mean** or **winsorized mean**.
+- Use the **median** for heavily skewed data.
+- Apply transformations (log, square root) before averaging.
+
+**Process:**
+Identify outliers with IQR or z-scores and justify any treatment transparently.
 
 ---
 
 ## Question 80
 - [ ] Done
 
-**How do you calculate the mean of ratios vs. the ratio of means, and when does each apply?**
+**How do you calculate and interpret the coefficient of variation using mean and standard deviation?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Formula:**
+$$CV = \frac{s}{\bar{x}}$$
+
+**Interpretation:**
+CV measures relative variability. It enables comparison of dispersion across metrics with different units or scales.
+
+**Caution:**
+Only meaningful for ratio-scale data with a positive mean.
 
 ---
 
 ## Question 81
 - [ ] Done
 
-**In survey research, how do you handle calculating mean responses when some participants skip questions?**
+**In population studies, how do you adjust means for demographic differences between groups?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Methods:**
+- **Direct standardization:** Weight subgroup means by a reference population distribution.
+- **Regression adjustment:** Model outcome with demographic covariates and predict adjusted means.
+- **Stratification:** Report means within demographic strata.
+
+**Goal:**
+Make fair comparisons by removing compositional differences.
 
 ---
 
 ## Question 82
 - [ ] Done
 
-**How do you use the central limit theorem to make inferences about population means from sample data?**
+**When analyzing conversion funnels, how do you calculate and interpret mean conversion rates at each stage?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Calculation:**
+- Stage rate: $r_k = \frac{\text{completions at stage }k}{\text{entrants to stage }k}$.
+- Overall conversion: product of stage rates.
+
+**Mean Rate:**
+- Use **weighted mean** across cohorts (weights = entrants) for overall performance.
+- Use **unweighted mean** to compare cohort behavior.
+
+**Interpretation:**
+Identify where the largest drop-offs occur to prioritize improvements.
 
 ---
 
 ## Question 83
 - [ ] Done
 
-**What's the impact of measurement precision on the accuracy of mean calculations?**
+**How do you handle calculating central tendency for mixed data types (numerical and categorical)?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- **Numerical:** use mean/median.
+- **Categorical:** use mode and frequency table.
+- **Mixed datasets:** report separate summaries per feature type.
+
+**Note:**
+Avoid forcing a single numeric summary across mixed types.
 
 ---
 
 ## Question 84
 - [ ] Done
 
-**How do you calculate and interpret the standard error of the mean in research studies?**
+**In regression analysis, how do mean-centered variables affect model interpretation?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Effect:**
+Mean-centering replaces $X$ with $X_c = X - \bar{X}$.
+
+**Interpretation:**
+- The intercept becomes the expected outcome at the average value of $X$.
+- Reduces multicollinearity in interaction or polynomial terms.
+- Does not change fitted values or model fit statistics.
 
 ---
 
 ## Question 85
 - [ ] Done
 
-**In business analytics, how do you use rolling means to identify trends in KPIs?**
+**How do you calculate the expected value (mean) of a discrete probability distribution?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Formula:**
+$$E[X] = \sum_i x_i \cdot P(X = x_i)$$
+
+**Example:**
+If $X$ is 0 or 1 with $P(X=1)=0.3$, then $E[X]=0.3$.
 
 ---
 
 ## Question 86
 - [ ] Done
 
-**How do you handle extreme values when calculating mean in robust statistical analysis?**
+**In clustering algorithms, how do centroids relate to mean calculations, and what are the implications?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Centroid = Mean:**
+In k-means, each centroid is the mean of points in its cluster.
+
+**Implications:**
+- Minimizes within-cluster squared distances.
+- Sensitive to outliers.
+- Requires feature scaling for meaningful distances.
+
+**Alternative:**
+K-medoids uses actual points and is more robust.
 
 ---
 
 ## Question 87
 - [ ] Done
 
-**What's the relationship between median and percentiles, and how do you use this in data analysis?**
+**How do you use trimmed means to reduce the influence of outliers in financial analysis?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Method:**
+Remove a fixed percentage of the highest and lowest values before averaging.
+
+**Use Case:**
+Financial returns and revenue can be heavy-tailed; trimming (e.g., 5% or 10%) reduces the effect of extreme values.
+
+**Practice:**
+Report trim level and compare with mean and median.
 
 ---
 
 ## Question 88
 - [ ] Done
 
-**How do you calculate and interpret the coefficient of variation using mean and standard deviation?**
+**What's the difference between arithmetic mean and root mean square, and when would you use each?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Definitions:**
+- **Arithmetic mean:** $\bar{x} = \frac{1}{n} \sum x_i$.
+- **RMS:** $\sqrt{\frac{1}{n} \sum x_i^2}$.
+
+**Differences:**
+RMS weights large values more heavily and is always at least as large as the absolute mean.
+
+**Use Cases:**
+- Arithmetic mean for central tendency.
+- RMS for signal magnitude, error (RMSE), or power calculations.
 
 ---
 
 ## Question 89
 - [ ] Done
 
-**In population studies, how do you adjust means for demographic differences between groups?**
+**How do you apply the concept of central tendency to evaluate the center of multivariate data distributions?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Options:**
+- **Mean vector (centroid):** average of each feature.
+- **Component-wise median:** robust to outliers in each dimension.
+- **Geometric median:** single point minimizing total distance.
+
+**Practice:**
+Combine with covariance (e.g., Mahalanobis distance) to assess how typical points are relative to the multivariate center.
 
 ---
 
 ## Question 90
 - [ ] Done
 
-**How do you use the law of large numbers to understand the behavior of sample means?**
+**When would you choose a z-test over a t-test when comparing sample means to population values?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Use a z-test when:**
+- The population standard deviation $\sigma$ is known.
+- The sample size is large (commonly $n \ge 30$), so the sampling distribution is near normal.
+- The data are approximately normal or the CLT applies.
+
+**Use a t-test when:**
+- $\sigma$ is unknown and you estimate it with sample $s$.
+- The sample size is small and normality matters.
+
+**Rule of thumb:** z-test is rare in practice because $\sigma$ is usually unknown.
 
 ---
 
 ## Question 91
 - [ ] Done
 
-**When analyzing conversion funnels, how do you calculate and interpret mean conversion rates at each stage?**
+**How do you determine the appropriate sample size for a two-sample t-test to achieve desired statistical power?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Inputs needed:**
+- Significance level $\alpha$ (Type I error)
+- Power $1-\beta$
+- Expected effect size (difference in means) $\Delta$
+- Estimated standard deviation $s$ (or Cohen's d)
+
+**Approximate formula (equal group sizes):**
+$$n \approx 2 \left(\frac{z_{\alpha/2} + z_{\beta}}{\Delta / s}\right)^2$$
+This uses normal approximation; software uses the t distribution more precisely.
+
+**Python Example (statsmodels):**
+```python
+from statsmodels.stats.power import TTestIndPower
+
+effect_size = 0.5  # Cohen's d
+alpha = 0.05
+power = 0.80
+
+analysis = TTestIndPower()
+n_per_group = analysis.solve_power(effect_size=effect_size, alpha=alpha, power=power)
+print(n_per_group)
+```
 
 ---
 
 ## Question 92
 - [ ] Done
 
-**How do you handle calculating central tendency for mixed data types (numerical and categorical)?**
+**In A/B testing with conversion rates, when is it appropriate to use a z-test for proportions?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Appropriate when:**
+- Two independent groups (A and B).
+- Sample sizes are large and expected counts are sufficient: $np \ge 10$ and $n(1-p) \ge 10$ in each group.
+- You are comparing proportions (conversion rates).
+
+**If counts are small:**
+Use Fisher's exact test or a chi-square test with caution.
 
 ---
 
 ## Question 93
 - [ ] Done
 
-**In regression analysis, how do mean-centered variables affect model interpretation?**
+**How do you handle violations of the normality assumption in t-tests, and what alternatives exist?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Options:**
+- **Use CLT:** If $n$ is large, t-test is robust to mild non-normality.
+- **Transform data:** Log or square-root to reduce skew.
+- **Non-parametric tests:** Mann-Whitney U (independent) or Wilcoxon signed-rank (paired).
+- **Bootstrap or permutation tests:** Estimate p-values and CIs without normality assumptions.
+
+**Best practice:**
+Check Q-Q plots and run sensitivity analyses with robust methods.
 
 ---
 
 ## Question 94
 - [ ] Done
 
-**How do you calculate the expected value (mean) of a discrete probability distribution?**
+**What's the difference between paired t-tests and independent t-tests, and how do you choose between them?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Paired t-test:**
+- Same subjects measured twice (before/after) or matched pairs.
+- Tests the mean of within-pair differences.
+
+**Independent t-test:**
+- Two unrelated groups.
+- Tests difference between group means.
+
+**Choose based on design:**
+If observations are linked, use paired; otherwise use independent.
 
 ---
 
 ## Question 95
 - [ ] Done
 
-**In clustering algorithms, how do centroids relate to mean calculations, and what are the implications?**
+**How do you interpret the degrees of freedom in t-tests and why do they matter for small samples?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Meaning:**
+Degrees of freedom (df) reflect how many values are free to vary after estimating parameters.
+
+**Common cases:**
+- One-sample/paired: $df = n - 1$.
+- Independent (equal variances): $df = n_1 + n_2 - 2$.
+- Welch: df is smaller and computed from variances.
+
+**Why it matters:**
+Smaller df gives heavier tails, larger critical values, and wider confidence intervals.
 
 ---
 
 ## Question 96
 - [ ] Done
 
-**How do you use trimmed means to reduce the influence of outliers in financial analysis?**
+**When comparing website performance metrics, how do you account for unequal variances in your t-test approach?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Use Welch's t-test:**
+It does not assume equal variances and is the default when variances differ.
+
+**Steps:**
+- Check variance equality with Levene's test.
+- If unequal, run Welch's t-test and report Welch df and CI.
+
+**Practical tip:**
+Welch is safe even when variances are equal, so it is often preferred.
 
 ---
 
 ## Question 97
 - [ ] Done
 
-**What's the difference between arithmetic mean and root mean square, and when would you use each?**
+**How do you calculate and interpret effect size (Cohen's d) alongside t-test results?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Formula (independent samples):**
+$$d = \frac{\bar{x}_1 - \bar{x}_2}{s_p}$$
+$$s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2}}$$
+
+**Interpretation (rule of thumb):**
+- 0.2 small, 0.5 medium, 0.8 large.
+
+**Why it matters:**
+Effect size communicates practical magnitude beyond p-values.
 
 ---
 
 ## Question 98
 - [ ] Done
 
-**How do you apply the concept of central tendency to evaluate the center of multivariate data distributions?**
+**In quality control, how do you use one-sample t-tests to determine if a process meets specifications?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Process:**
+- Define target mean $\mu_0$ (specification).
+- Collect sample measurements and compute $\bar{x}$ and $s$.
+- Test $H_0: \mu = \mu_0$ vs $H_1: \mu \ne \mu_0$ (or one-sided if only one direction matters).
+
+**Decision:**
+If $p < \alpha$, conclude the process mean is off spec. Also report a CI to assess how far off.
+
+---
+
+## Question 99
+- [ ] Done
+
+**How do you handle multiple comparisons when conducting several t-tests, and what corrections should you apply?**
+
+**Answer:**
+
+**Problem:**
+Multiple t-tests inflate the Type I error rate.
+
+**Corrections:**
+- **Bonferroni:** $\alpha' = \alpha / m$ (simple, conservative).
+- **Holm:** step-down, less conservative.
+- **FDR (Benjamini-Hochberg):** controls false discovery rate.
+
+**Alternative:**
+Use ANOVA first, then post-hoc tests if significant.
+
+---
+
+## Question 100
+- [ ] Done
+
+**What happens to t-test validity when your data contains outliers, and how do you address this?**
+
+**Answer:**
+
+**Impact:**
+Outliers can inflate variance, distort means, and reduce test power or create false positives.
+
+**Mitigation:**
+- Inspect data and justify any removal.
+- Use robust measures (trimmed mean) or transform data.
+- Apply non-parametric tests or bootstrap CIs.
+- Report sensitivity analysis with and without outliers.
+
+---
+
+## Question 101
+- [ ] Done
+
+**How do you use pooled variance t-tests when group variances are similar versus Welch's t-test when they differ?**
+
+**Answer:**
+
+**Pooled variance t-test:**
+- Assumes $\sigma_1^2 \approx \sigma_2^2$.
+- Uses pooled variance $s_p^2$ to compute the standard error.
+
+**Welch's t-test:**
+- No equal-variance assumption.
+- Adjusts df downward when variances differ.
+
+**Choice:**
+If Levene's test shows equal variances, pooled is fine; otherwise use Welch.
+
+---
+
+## Question 102
+- [ ] Done
+
+**In clinical trials, how do you choose between one-tailed and two-tailed t-tests based on research hypotheses?**
+
+**Answer:**
+
+**Two-tailed:**
+Use when effects in either direction are possible or important (most clinical trials).
+
+**One-tailed:**
+Use only if the opposite direction is irrelevant or impossible and this is pre-specified.
+
+**Regulatory practice:**
+Two-tailed tests are typically preferred to avoid bias.
+
+---
+
+## Question 103
+- [ ] Done
+
+**How do you calculate confidence intervals for the difference in means using t-test results?**
+
+**Answer:**
+
+**Formula:**
+$$CI = (\bar{x}_1 - \bar{x}_2) \pm t_{\alpha/2, df} \cdot SE_{diff}$$
+
+**Standard error:**
+- Equal variances: $SE_{diff} = s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$
+- Welch: $SE_{diff} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$
+
+**Interpretation:**
+If the CI excludes 0, the difference is statistically significant at level $\alpha$.
+
+---
+
+## Question 104
+- [ ] Done
+
+**When should you use non-parametric alternatives like Mann-Whitney U instead of t-tests?**
+
+**Answer:**
+
+**Use Mann-Whitney U when:**
+- Data are ordinal or heavily skewed.
+- Outliers are influential and cannot be justified.
+- Sample sizes are small and normality is questionable.
+
+**Note:**
+It compares rank distributions, not strictly means.
+
+---
+
+## Question 105
+- [ ] Done
+
+**How do you interpret t-test results when sample sizes are very different between groups?**
+
+**Answer:**
+
+**Key points:**
+- Use Welch's t-test to handle unequal variances.
+- The smaller group dominates uncertainty, leading to wider CIs.
+- Report effect size and CI, not just p-value.
+
+**Caution:**
+Large imbalance can reduce power to detect differences.
+
+---
+
+## Question 106
+- [ ] Done
+
+**In business analytics, how do you use repeated measures t-tests to analyze before-and-after interventions?**
+
+**Answer:**
+
+**Approach:**
+- Pair each subject's before and after measurements.
+- Compute differences $d_i = after_i - before_i$.
+- Run a one-sample t-test on $d_i$ against 0.
+
+**Interpretation:**
+Significant mean difference implies the intervention changed the metric.
+
+---
+
+## Question 107
+- [ ] Done
+
+**How do you handle missing data in paired t-test scenarios while maintaining statistical validity?**
+
+**Answer:**
+
+**Options:**
+- Use only complete pairs (listwise deletion).
+- If missingness is systematic, use multiple imputation or mixed models.
+- Report how many pairs were dropped.
+
+**Avoid:**
+Mixing paired and unpaired observations in a paired t-test.
+
+---
+
+## Question 108
+- [ ] Done
+
+**What's the relationship between t-tests and linear regression, and when might you use each approach?**
+
+**Answer:**
+
+**Relationship:**
+A two-sample t-test is equivalent to a linear regression with a binary group indicator.
+
+**Use t-test when:**
+Simple two-group comparison with no covariates.
+
+**Use regression when:**
+You need to adjust for covariates, add interactions, or model multiple predictors.
+
+---
+
+## Question 109
+- [ ] Done
+
+**How do you use bootstrap methods to validate t-test assumptions and results?**
+
+**Answer:**
+
+**Steps:**
+- Resample each group with replacement.
+- Compute the mean difference for each bootstrap sample.
+- Build a bootstrap CI and compare with the t-test CI.
+
+**Benefit:**
+If bootstrap and t-test agree, results are more robust under non-normality.
+
+---
+
+## Question 110
+- [ ] Done
+
+**In experimental design, how do you use t-tests to analyze the effectiveness of different treatments?**
+
+**Answer:**
+
+**Process:**
+- Define $H_0$ (no mean difference) and $H_1$ (difference or direction).
+- Choose paired or independent t-test based on design.
+- Calculate t-statistic, p-value, and effect size.
+- If multiple treatments, prefer ANOVA then post-hoc tests.
+
+---
+
+## Question 111
+- [ ] Done
+
+**How do you calculate the minimum detectable difference in a t-test given your sample size and variance?**
+
+**Answer:**
+
+**Idea:**
+Minimum detectable difference (MDD) is the smallest mean difference you can detect with given $n$, $\alpha$, and power.
+
+**Approximate formula (equal n):**
+$$MDD \approx (z_{\alpha/2} + z_{\beta}) \cdot s_p \sqrt{\frac{2}{n}}$$
+
+**Use:**
+If the expected effect is smaller than MDD, the study is underpowered.
+
+---
+
+## Question 112
+- [ ] Done
+
+**What are the implications of using t-tests with Likert scale data versus treating it as continuous?**
+
+**Answer:**
+
+**Implications:**
+- Likert data are ordinal; t-tests assume interval scale.
+- With 5+ categories and large samples, t-tests are often robust.
+- For small samples or skew, use Mann-Whitney or ordinal models.
+
+**Best practice:**
+Report medians and distributions alongside any t-test results.
+
+---
+
+## Question 113
+- [ ] Done
+
+**How do you interpret t-test results when the practical significance differs from statistical significance?**
+
+**Answer:**
+
+**Interpretation:**
+- A small p-value can result from very large samples even for tiny effects.
+- Practical significance requires effect size and business context.
+
+**What to report:**
+- Effect size (Cohen's d) and confidence interval.
+- A threshold for meaningful change (MDE or business KPI target).
+
+---
+
+## Question 114
+- [ ] Done
+
+**In survey research, how do you account for complex sampling designs when using t-tests?**
+
+**Answer:**
+
+**Adjustments:**
+- Apply sampling weights to reflect the survey design.
+- Use design-based standard errors (cluster/strata).
+- Use survey-aware t-tests (e.g., via survey packages).
+
+**Why:**
+Ignoring design can understate variance and inflate significance.
+
+---
+
+## Question 115
+- [ ] Done
+
+**How do you use t-tests to validate machine learning model performance across different datasets?**
+
+**Answer:**
+
+**Approach:**
+- Compute performance metric per fold or dataset (e.g., accuracy, RMSE).
+- Use paired t-test on matched folds if the same splits are used.
+- Use independent t-test if datasets are unrelated.
+
+**Caution:**
+Account for dependence across folds; corrected resampled t-test may be needed.
+
+---
+
+## Question 116
+- [ ] Done
+
+**What's the impact of heteroscedasticity on t-test results and how do you test for it?**
+
+**Answer:**
+
+**Impact:**
+Unequal variances can inflate Type I error in pooled t-tests.
+
+**Detection:**
+- Levene's test or Brown-Forsythe test.
+- Visual checks with side-by-side box plots.
+
+**Fix:**
+Use Welch's t-test or transform data.
+
+---
+
+## Question 117
+- [ ] Done
+
+**How do you conduct equivalence testing using t-tests to show that two groups are similar?**
+
+**Answer:**
+
+**Definition:**
+Equivalence testing checks whether the mean difference is small enough to be practically negligible, within a pre-defined margin $\Delta$.
+
+**Approach (TOST):**
+- Set $H_0: |\mu_1 - \mu_2| \ge \Delta$ and $H_1: |\mu_1 - \mu_2| < \Delta$.
+- Run two one-sided t-tests (TOST) at level $\alpha$.
+- Declare equivalence if both one-sided p-values are $< \alpha$.
+
+**CI Rule:**
+If the $100(1-2\alpha)$% CI for $\mu_1-\mu_2$ lies entirely within $[-\Delta, \Delta]$, conclude equivalence.
+
+---
+
+## Question 118
+- [ ] Done
+
+**In longitudinal studies, how do you use t-tests to analyze changes over time within subjects?**
+
+**Answer:**
+
+**Approach:**
+- Use a paired t-test on within-subject differences $d_i = y_{i,post} - y_{i,pre}$.
+- If there are more than two time points, use repeated measures ANOVA or mixed-effects models.
+
+**Interpretation:**
+A significant result indicates the mean change over time is different from zero.
+
+---
+
+## Question 119
+- [ ] Done
+
+**How do you handle zero-inflated or highly skewed data when considering t-test applications?**
+
+**Answer:**
+
+**Options:**
+- Transform the data (log, sqrt, or log1p).
+- Use non-parametric tests (Mann-Whitney, Wilcoxon).
+- Use bootstrap or permutation tests for p-values and CIs.
+- Consider two-part models if zeros are structural (hurdle/ZIP).
+
+**Goal:**
+Avoid violating normality and variance assumptions while preserving interpretability.
+
+---
+
+## Question 120
+- [ ] Done
+
+**What's the relationship between t-tests and ANOVA, and when does each approach apply?**
+
+**Answer:**
+
+**Relationship:**
+ANOVA generalizes t-tests. With two groups, the ANOVA F-test is equivalent to $t^2$.
+
+**Use t-test:**
+Compare exactly two group means.
+
+**Use ANOVA:**
+Compare three or more groups or test multiple factors and interactions.
+
+---
+
+## Question 121
+- [ ] Done
+
+**How do you use simulation studies to understand the robustness of t-tests under various conditions?**
+
+**Answer:**
+
+**Steps:**
+1. Simulate data under different distributions, variances, and sample sizes.
+2. Run t-tests repeatedly (Monte Carlo).
+3. Estimate Type I error (under $H_0$) and power (under $H_1$).
+
+**Use:**
+Identify when t-tests remain reliable or break under non-normality, outliers, or heteroscedasticity.
+
+---
+
+## Question 122
+- [ ] Done
+
+**In market research, how do you use t-tests to compare customer satisfaction between segments?**
+
+**Answer:**
+
+**Approach:**
+- Define segments (e.g., region, age).
+- Use an independent t-test for two segments or ANOVA for more.
+- Check variance equality; use Welch if unequal.
+
+**Report:**
+Mean difference, p-value, and effect size for business relevance.
+
+---
+
+## Question 123
+- [ ] Done
+
+**How do you calculate and interpret the standard error of the difference in means?**
+
+**Answer:**
+
+**Formula:**
+- Equal variances: $SE_{diff} = s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$.
+- Unequal variances: $SE_{diff} = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$.
+
+**Interpretation:**
+It is the expected sampling variability of the mean difference.
+
+---
+
+## Question 124
+- [ ] Done
+
+**What are the implications of using t-tests with time-series data that may be autocorrelated?**
+
+**Answer:**
+
+**Implications:**
+Autocorrelation violates independence, underestimates SEs, and inflates Type I error.
+
+**Fixes:**
+- Use time-series models (ARIMA) or regression with autocorrelated errors.
+- Use block bootstrap or Newey-West SEs.
+- Aggregate to reduce dependence.
+
+---
+
+## Question 125
+- [ ] Done
+
+**How do you use t-tests in the context of A/B testing while controlling for multiple testing issues?**
+
+**Answer:**
+
+**Best practices:**
+- Pre-define primary metric and hypotheses.
+- Adjust for multiple tests using Holm or FDR.
+- Avoid peeking; use sequential testing if monitoring.
+
+**Report:**
+Adjusted p-values and effect sizes.
+
+---
+
+## Question 126
+- [ ] Done
+
+**In manufacturing, how do you use t-tests to compare product quality across different production lines?**
+
+**Answer:**
+
+**Approach:**
+- If two lines: independent t-test (Welch if variances differ).
+- If more than two lines: ANOVA then post-hoc tests.
+
+**Use:**
+Identify which line has significantly different mean quality and quantify the gap.
+
+---
+
+## Question 127
+- [ ] Done
+
+**How do you handle bounded or truncated data when applying t-tests (e.g., percentages, scores)?**
+
+**Answer:**
+
+**Options:**
+- Transform data (logit for proportions, arcsine-sqrt).
+- Use beta regression for rates.
+- Use non-parametric tests if distributions are skewed.
+
+**Note:**
+Boundaries compress variance; interpret differences carefully.
+
+---
+
+## Question 128
+- [ ] Done
+
+**What's the difference between fixed effects and random effects when interpreting t-test results?**
+
+**Answer:**
+
+**Fixed effects:**
+Levels are specific and of direct interest; t-tests on fixed effects apply only to those levels.
+
+**Random effects:**
+Levels are sampled from a population; inference generalizes beyond observed levels and uses variance components.
+
+**Implication:**
+For clustered data, use mixed models; t-tests on fixed effects need cluster-robust SEs.
+
+---
+
+## Question 129
+- [ ] Done
+
+**How do you use Monte Carlo methods to determine the power of t-tests under specific conditions?**
+
+**Answer:**
+
+**Steps:**
+1. Simulate data under an assumed effect size and variance.
+2. Run t-test many times.
+3. Power = proportion of simulations with $p < \alpha$.
+
+**Benefit:**
+Handles non-normality and complex designs where closed-form power is hard.
+
+---
+
+## Question 130
+- [ ] Done
+
+**In educational research, how do you use t-tests to evaluate intervention effectiveness while accounting for baseline differences?**
+
+**Answer:**
+
+**Approaches:**
+- Use ANCOVA with baseline score as a covariate.
+- Or analyze change scores with a paired t-test (if same students).
+
+**Why:**
+Controls for pre-existing differences and increases precision.
+
+---
+
+## Question 131
+- [ ] Done
+
+**How do you interpret and report t-test results in terms of practical significance for business decisions?**
+
+**Answer:**
+
+**Report:**
+- Mean difference with CI.
+- Effect size (Cohen's d) and business impact (e.g., revenue uplift).
+- Whether the change exceeds a pre-defined practical threshold.
+
+**Key point:**
+Statistical significance does not guarantee meaningful business impact.
+
+---
+
+## Question 132
+- [ ] Done
+
+**What are the considerations for using t-tests with ratio data versus interval data?**
+
+**Answer:**
+
+**Considerations:**
+- Ratio data have a true zero; interval data do not.
+- Both can use t-tests if normality and variance assumptions hold.
+- Ratio data are often skewed; transformations may be needed.
+
+---
+
+## Question 133
+- [ ] Done
+
+**How do you use t-tests in the context of propensity score matching for causal inference?**
+
+**Answer:**
+
+**After matching:**
+- Use paired t-tests on matched pairs or weighted t-tests on matched samples.
+- Report balance diagnostics first to justify comparison.
+
+**Caution:**
+Use robust or clustered SEs if pairs are not independent.
+
+---
+
+## Question 134
+- [ ] Done
+
+**In psychology research, how do you handle ceiling and floor effects when using t-tests?**
+
+**Answer:**
+
+**Issues:**
+Ceiling/floor effects compress variance and violate normality.
+
+**Fixes:**
+- Use non-parametric tests or ordinal models.
+- Consider Tobit models for censored outcomes.
+- Redesign measurement scales to avoid saturation.
+
+---
+
+## Question 135
+- [ ] Done
+
+**How do you calculate sample size requirements for t-tests when planning future studies?**
+
+**Answer:**
+
+**Inputs:**
+Effect size (Cohen's d), $\alpha$, desired power, and variance.
+
+**Tooling:**
+Use power analysis software (statsmodels, G*Power) to solve for $n$.
+
+**Tip:**
+Use pilot data or literature to estimate variance and effect size.
+
+---
+
+## Question 136
+- [ ] Done
+
+**What's the impact of measurement error on t-test results and how do you account for it?**
+
+**Answer:**
+
+**Impact:**
+Measurement error inflates variance, reduces power, and attenuates effect sizes.
+
+**Mitigation:**
+- Improve measurement reliability.
+- Use repeated measurements and average them.
+- Model measurement error explicitly when possible.
+
+---
+
+## Question 137
+- [ ] Done
+
+**How do you use t-tests to analyze residuals and validate regression model assumptions?**
+
+**Answer:**
+
+**Use cases:**
+- Test whether mean residual is zero (should be, by design).
+- Compare residuals across groups to detect systematic bias.
+
+**Better diagnostics:**
+Use residual plots, Q-Q plots, and tests for heteroscedasticity instead of relying only on t-tests.
+
+---
+
+## Question 138
+- [ ] Done
+
+**In environmental studies, how do you use t-tests to compare pollution levels before and after interventions?**
+
+**Answer:**
+
+**Approach:**
+- Use a paired t-test on matched before/after measurements.
+- Adjust for seasonality or use control sites (difference-in-differences).
+
+**Interpretation:**
+Significant mean difference suggests the intervention changed pollution levels.
+
+---
+
+## Question 139
+- [ ] Done
+
+**How do you communicate t-test results effectively to non-statistical stakeholders while maintaining accuracy?**
+
+**Answer:**
+
+**Communication tips:**
+- State the mean difference and its CI in plain language.
+- Explain practical impact (e.g., percent change or dollars).
+- Clarify that p-value shows evidence, not certainty.
+
+**Example:**
+"Group B improved by 3.2 points (95% CI: 1.1 to 5.3). This is likely real and meaningful." 
+
+---
+
+## Question 140
+- [ ] Done
+
+**How do you decide between one-way and two-way ANOVA when designing an experiment with multiple factors?**
+
+**Answer:**
+
+**One-way ANOVA:**
+One factor with multiple levels.
+
+**Two-way ANOVA:**
+Two factors; allows main effects and interaction effects.
+
+**Decision rule:**
+If you have two meaningful factors and want to test interaction, use two-way.
+
+---
+
+## Question 141
+- [ ] Done
+
+**In marketing research, how do you use ANOVA to compare the effectiveness of different advertising campaigns across various demographic groups?**
+
+**Answer:**
+
+**Approach:**
+- Use two-way ANOVA with factors: campaign and demographic group.
+- Test interaction to see if campaign effects differ by demographic.
+- Use post-hoc tests to identify which pairs differ.
+
+---
+
+## Question 142
+- [ ] Done
+
+**What are the assumptions of ANOVA and how do you test for violations like unequal variances or non-normality?**
+
+**Answer:**
+
+**Assumptions:**
+- Independence of observations.
+- Normality of residuals.
+- Homogeneity of variances.
+
+**Tests:**
+- Q-Q plot or Shapiro-Wilk for normality.
+- Levene or Bartlett for equal variances.
+- Residual plots for structure.
+
+---
+
+## Question 143
+- [ ] Done
+
+**How do you interpret the F-statistic and its relationship to effect size in practical business applications?**
+
+**Answer:**
+
+**Interpretation:**
+The F-statistic is the ratio of between-group variance to within-group variance. Larger values indicate stronger evidence of group differences.
+
+**Effect size link:**
+Use $\eta^2$ or partial $\eta^2$ to quantify the proportion of variance explained for business relevance.
+
+---
+
+## Question 144
+- [ ] Done
+
+**When ANOVA shows significant differences, how do you use post-hoc tests to identify which specific groups differ?**
+
+**Answer:**
+
+**Post-hoc options:**
+- Tukey HSD for all pairwise comparisons.
+- Holm or Bonferroni for conservative control.
+- Games-Howell when variances are unequal.
+
+**Process:**
+Run post-hoc only after a significant omnibus ANOVA.
+
+---
+
+## Question 145
+- [ ] Done
+
+**How do you handle unbalanced designs in ANOVA when group sizes are unequal?**
+
+**Answer:**
+
+**Approaches:**
+- Use Type II or Type III sums of squares.
+- Consider Welch ANOVA if variances differ.
+- Report adjusted means (least squares means).
+
+**Goal:**
+Reduce bias and control Type I error under imbalance.
+
+---
+
+## Question 146
+- [ ] Done
+
+**In quality control, how do you use ANOVA to analyze sources of variation in manufacturing processes?**
+
+**Answer:**
+
+**Approach:**
+- Model factors like machine, operator, shift, batch.
+- Decompose variance into between-factor and within-factor components.
+- Identify dominant sources of variability for process improvement.
+
+---
+
+## Question 147
+- [ ] Done
+
+**What's the difference between fixed effects and random effects in ANOVA, and how does this impact interpretation?**
+
+**Answer:**
+
+**Fixed effects:**
+Levels are the only ones of interest; inference is limited to those levels.
+
+**Random effects:**
+Levels are sampled from a population; inference generalizes beyond observed levels.
+
+**Impact:**
+Random effects use variance components and require mixed-effects models.
+
+---
+
+## Question 148
+- [ ] Done
+
+**How do you calculate and interpret eta-squared or partial eta-squared as measures of effect size?**
+
+**Answer:**
+
+**Formulas:**
+$$\eta^2 = \frac{SS_{effect}}{SS_{total}}$$
+$$\eta_p^2 = \frac{SS_{effect}}{SS_{effect} + SS_{error}}$$
+
+**Interpretation (rule of thumb):**
+0.01 small, 0.06 medium, 0.14 large.
 
 ---
 
 ## Question 149
 - [ ] Done
 
-**When would you choose a z-test over a t-test when comparing sample means to population values?**
+**In A/B testing with multiple variants, how do you use ANOVA instead of multiple t-tests?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Use one-way ANOVA with variant as the factor.
+- If significant, use post-hoc tests (Tukey or Games-Howell).
+
+**Benefit:**
+Controls overall Type I error compared to many t-tests.
 
 ---
 
 ## Question 150
 - [ ] Done
 
-**How do you determine the appropriate sample size for a two-sample t-test to achieve desired statistical power?**
+**How do you handle missing data in ANOVA designs while maintaining statistical validity?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Options:**
+- Use complete cases if missingness is small and random.
+- Use multiple imputation for more systematic missingness.
+- Prefer mixed-effects models for repeated measures with missing data.
+
+**Always:**
+Report missingness patterns and sensitivity checks.
 
 ---
 
 ## Question 151
 - [ ] Done
 
-**In A/B testing with conversion rates, when is it appropriate to use a z-test for proportions?**
+**What are the advantages of mixed-effects ANOVA when dealing with repeated measures data?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Advantages:**
+- Models subject-specific random effects.
+- Handles missing time points without listwise deletion.
+- Allows unequal spacing and more flexible covariance structures.
 
 ---
 
 ## Question 152
 - [ ] Done
 
-**How do you handle violations of the normality assumption in t-tests, and what alternatives exist?**
+**How do you use ANOVA to decompose total variance into between-group and within-group components?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Decomposition:**
+$$SS_{total} = SS_{between} + SS_{within}$$
+$$MS_{between} = SS_{between}/(k-1), \quad MS_{within} = SS_{within}/(N-k)$$
+
+**Test:**
+$$F = MS_{between}/MS_{within}$$
 
 ---
 
 ## Question 153
 - [ ] Done
 
-**What's the difference between paired t-tests and independent t-tests, and how do you choose between them?**
+**In clinical trials, how do you use ANOVA to analyze treatment effects while controlling for baseline characteristics?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Use ANCOVA:**
+- Include baseline as a covariate.
+- Compare adjusted treatment means.
+
+**Benefit:**
+Reduces variance and improves power while controlling confounding.
 
 ---
 
 ## Question 154
 - [ ] Done
 
-**How do you interpret the degrees of freedom in t-tests and why do they matter for small samples?**
+**How do you interpret interaction effects in two-way ANOVA and their practical implications?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Interpretation:**
+An interaction means the effect of one factor depends on the level of the other.
+
+**Implications:**
+Main effects may be misleading; report simple effects and interaction plots.
 
 ---
 
 ## Question 155
 - [ ] Done
 
-**When comparing website performance metrics, how do you account for unequal variances in your t-test approach?**
+**What are the differences between Type I, Type II, and Type III sums of squares in ANOVA?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Type I (sequential):**
+Order-dependent; each factor adjusted for previous ones only.
+
+**Type II:**
+Adjusts main effects for other main effects (not interactions).
+
+**Type III:**
+Adjusts each effect for all other effects including interactions; common in unbalanced designs.
 
 ---
 
 ## Question 156
 - [ ] Done
 
-**How do you calculate and interpret effect size (Cohen's d) alongside t-test results?**
+**How do you use Levene's test or Bartlett's test to check homogeneity of variance assumptions?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Levene's test:**
+Robust to non-normality; preferred for real data.
+
+**Bartlett's test:**
+More powerful under normality but sensitive to deviations.
+
+**Decision:**
+If p < $\alpha$, variances are unequal; consider Welch ANOVA or transformations.
 
 ---
 
 ## Question 157
 - [ ] Done
 
-**In quality control, how do you use one-sample t-tests to determine if a process meets specifications?**
+**In educational research, how do you use nested ANOVA to analyze student performance across schools and classrooms?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Design:**
+Classrooms nested within schools (students within classrooms).
+
+**Model:**
+Treat schools and classrooms as nested random effects to partition variance at each level.
+
+**Use:**
+Identify whether most variation is between schools or between classrooms.
 
 ---
 
 ## Question 158
 - [ ] Done
 
-**How do you handle multiple comparisons when conducting several t-tests, and what corrections should you apply?**
+**How do you calculate sample size requirements for ANOVA to achieve adequate statistical power?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Inputs:**
+Number of groups, expected effect size (Cohen's $f$), $\alpha$, and desired power.
+
+**Method:**
+Use power analysis software (statsmodels or G*Power) to solve for $n$.
+
+**Note:**
+Balanced designs maximize power for a fixed total sample size.
 
 ---
 
 ## Question 159
 - [ ] Done
 
-**What happens to t-test validity when your data contains outliers, and how do you address this?**
+**What are the non-parametric alternatives to ANOVA (Kruskal-Wallis, Friedman) and when should you use them?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Kruskal-Wallis:**
+Non-parametric alternative to one-way ANOVA for independent groups.
+
+**Friedman:**
+Alternative to repeated measures ANOVA for related samples.
+
+**Use when:**
+Data are ordinal, skewed, or variance assumptions are violated.
 
 ---
 
 ## Question 160
 - [ ] Done
 
-**How do you use pooled variance t-tests when group variances are similar versus Welch's t-test when they differ?**
+**How do you use contrast analysis in ANOVA to test specific hypotheses about group differences?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Define planned contrasts (linear combinations of group means).
+- Test each contrast using the ANOVA error term.
+
+**Benefit:**
+Targets specific hypotheses with more power than all-pairs post-hoc tests.
 
 ---
 
 ## Question 161
 - [ ] Done
 
-**In clinical trials, how do you choose between one-tailed and two-tailed t-tests based on research hypotheses?**
+**In survey research, how do you use ANOVA to analyze differences across multiple demographic variables simultaneously?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Use factorial ANOVA with demographic factors and interactions.
+- Apply survey weights and design-based SEs where appropriate.
+
+**Goal:**
+Estimate demographic effects while controlling for other factors.
 
 ---
 
 ## Question 162
 - [ ] Done
 
-**How do you calculate confidence intervals for the difference in means using t-test results?**
+**How do you handle outliers in ANOVA and assess their impact on results?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Steps:**
+- Inspect with box plots and standardized residuals.
+- Run analyses with and without outliers (sensitivity).
+- Use robust ANOVA or transformations if needed.
+
+**Rule:**
+Only remove outliers with a clear, documented reason.
 
 ---
 
 ## Question 163
 - [ ] Done
 
-**When should you use non-parametric alternatives like Mann-Whitney U instead of t-tests?**
+**What's the relationship between ANOVA and linear regression, and when might you prefer each approach?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Relationship:**
+ANOVA is a special case of linear regression with categorical predictors.
+
+**Prefer ANOVA:**
+When the focus is on group mean comparisons.
+
+**Prefer regression:**
+When you have continuous predictors, covariates, or interaction terms to adjust for.
 
 ---
 
 ## Question 164
 - [ ] Done
 
-**How do you interpret t-test results when sample sizes are very different between groups?**
+**How do you use MANOVA (Multivariate ANOVA) when you have multiple dependent variables?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Use case:**
+Test whether groups differ on a combination of outcomes.
+
+**Process:**
+- Fit MANOVA and evaluate multivariate statistics (Wilks' lambda, Pillai).
+- Follow with univariate ANOVAs and post-hoc tests if significant.
 
 ---
 
 ## Question 165
 - [ ] Done
 
-**In business analytics, how do you use repeated measures t-tests to analyze before-and-after interventions?**
+**In business analytics, how do you use ANOVA to optimize product pricing across different market segments?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Use factorial ANOVA with price level and segment as factors.
+- Test for segment-by-price interactions.
+- Use post-hoc comparisons to identify the best price per segment.
 
 ---
 
 ## Question 166
 - [ ] Done
 
-**How do you handle missing data in paired t-test scenarios while maintaining statistical validity?**
+**How do you interpret and report confidence intervals for group means in ANOVA results?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Interpretation:**
+Each CI shows the range of plausible values for the group mean.
+
+**Report:**
+- Group mean ± CI, and effect sizes.
+- Use adjusted (estimated marginal) means if covariates are included.
 
 ---
 
 ## Question 167
 - [ ] Done
 
-**What's the relationship between t-tests and linear regression, and when might you use each approach?**
+**What are the implications of sphericity assumptions in repeated measures ANOVA and how do you test for them?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Sphericity:**
+Equal variances of differences between repeated measures.
+
+**Test:**
+Mauchly's test.
+
+**If violated:**
+Apply Greenhouse-Geisser or Huynh-Feldt corrections, or use mixed models.
 
 ---
 
 ## Question 168
 - [ ] Done
 
-**How do you use bootstrap methods to validate t-test assumptions and results?**
+**How do you use ANCOVA (Analysis of Covariance) to control for confounding variables?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Include confounders as covariates in the model.
+- Compare adjusted group means at a common covariate value.
+
+**Check:**
+Homogeneity of regression slopes (no interaction between covariate and group).
 
 ---
 
 ## Question 169
 - [ ] Done
 
-**In experimental design, how do you use t-tests to analyze the effectiveness of different treatments?**
+**In manufacturing, how do you use factorial ANOVA to optimize multiple process parameters simultaneously?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Design a factorial experiment with key parameters (e.g., temperature, speed).
+- Fit factorial ANOVA to estimate main and interaction effects.
+- Choose settings that optimize the response based on effect sizes.
 
 ---
 
 ## Question 170
 - [ ] Done
 
-**How do you calculate the minimum detectable difference in a t-test given your sample size and variance?**
+**How do you handle heteroscedasticity in ANOVA using robust methods or transformations?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Options:**
+- Use Welch ANOVA or Brown-Forsythe test.
+- Transform data (log, sqrt).
+- Use robust or heteroscedasticity-consistent SEs.
 
 ---
 
 ## Question 171
 - [ ] Done
 
-**What are the implications of using t-tests with Likert scale data versus treating it as continuous?**
+**What's the difference between within-subjects and between-subjects ANOVA designs?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Within-subjects:**
+Same participants measured in multiple conditions; controls for subject variability.
+
+**Between-subjects:**
+Different participants in each condition; requires independence.
+
+**Implication:**
+Within-subjects designs have higher power but require sphericity checks.
 
 ---
 
 ## Question 172
 - [ ] Done
 
-**How do you interpret t-test results when the practical significance differs from statistical significance?**
+**How do you use ANOVA in the context of experimental design to evaluate treatment combinations?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Use factorial ANOVA to test main effects and interactions among treatments.
+- Interaction effects reveal whether combinations perform differently than expected.
 
 ---
 
 ## Question 173
 - [ ] Done
 
-**In survey research, how do you account for complex sampling designs when using t-tests?**
+**In market research, how do you use ANOVA to analyze customer satisfaction across multiple touchpoints?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- If the same customers rate all touchpoints, use repeated measures ANOVA.
+- If different samples, use one-way or two-way ANOVA.
+
+**Follow-up:**
+Post-hoc tests identify which touchpoints differ.
 
 ---
 
 ## Question 174
 - [ ] Done
 
-**How do you use t-tests to validate machine learning model performance across different datasets?**
+**How do you calculate and interpret confidence intervals for contrasts in ANOVA?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Contrast estimate:**
+$$L = \sum c_i \bar{x}_i$$
+
+**SE:**
+$$SE_L = \sqrt{MS_{error} \sum \frac{c_i^2}{n_i}}$$
+
+**CI:**
+$$L \pm t_{\alpha/2, df} \cdot SE_L$$
+
+**Interpretation:**
+If CI excludes 0, the contrast is significant.
 
 ---
 
 ## Question 175
 - [ ] Done
 
-**What's the impact of heteroscedasticity on t-test results and how do you test for it?**
+**What are the considerations for using ANOVA with ordinal data (like Likert scales)?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Considerations:**
+- Likert data are ordinal; ANOVA assumes interval scale.
+- With many categories and large samples, ANOVA can be robust.
+- Otherwise, use Kruskal-Wallis or ordinal regression.
 
 ---
 
 ## Question 176
 - [ ] Done
 
-**How do you conduct equivalence testing using t-tests to show that two groups are similar?**
+**How do you use permutation tests as a robust alternative to traditional ANOVA?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Method:**
+- Compute the observed F-statistic.
+- Randomly permute group labels many times and recompute F.
+- p-value = fraction of permuted F values >= observed F.
+
+**Benefit:**
+No normality or equal-variance assumptions.
 
 ---
 
 ## Question 177
 - [ ] Done
 
-**In longitudinal studies, how do you use t-tests to analyze changes over time within subjects?**
+**In psychology research, how do you use ANOVA to analyze the effects of multiple interventions?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Approach:**
+- Use factorial ANOVA if interventions are separate factors.
+- Use repeated measures ANOVA if the same participants receive multiple interventions.
+- Test for interaction effects to see combined impact.
 
 ---
 
 ## Question 178
 - [ ] Done
 
-**How do you handle zero-inflated or highly skewed data when considering t-test applications?**
+**How do you handle the multiple comparisons problem in ANOVA with many groups?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Solutions:**
+- Use Tukey HSD for all pairwise comparisons.
+- Use Holm or Bonferroni to control family-wise error.
+- Use FDR (Benjamini-Hochberg) for many tests.
 
 ---
 
 ## Question 179
 - [ ] Done
 
-**What's the relationship between t-tests and ANOVA, and when does each approach apply?**
+**What's the impact of unequal group sizes on ANOVA results and how do you address it?**
 
-**Answer:** _[To be filled]_
+**Answer:**
+
+**Impact:**
+Unequal sizes can reduce power and, with unequal variances, inflate Type I error.
+
+**Fixes:**
+- Use Welch ANOVA or robust methods.
+- Use Type II/III sums of squares.
+- Aim for balanced designs when possible.
 
 ---
 
 ## Question 180
-- [ ] Done
-
-**How do you use simulation studies to understand the robustness of t-tests under various conditions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 181
-- [ ] Done
-
-**In market research, how do you use t-tests to compare customer satisfaction between segments?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 182
-- [ ] Done
-
-**How do you calculate and interpret the standard error of the difference in means?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 183
-- [ ] Done
-
-**What are the implications of using t-tests with time-series data that may be autocorrelated?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 184
-- [ ] Done
-
-**How do you use t-tests in the context of A/B testing while controlling for multiple testing issues?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 185
-- [ ] Done
-
-**In manufacturing, how do you use t-tests to compare product quality across different production lines?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 186
-- [ ] Done
-
-**How do you handle bounded or truncated data when applying t-tests (e.g., percentages, scores)?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 187
-- [ ] Done
-
-**What's the difference between fixed effects and random effects when interpreting t-test results?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 188
-- [ ] Done
-
-**How do you use Monte Carlo methods to determine the power of t-tests under specific conditions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 189
-- [ ] Done
-
-**In educational research, how do you use t-tests to evaluate intervention effectiveness while accounting for baseline differences?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 190
-- [ ] Done
-
-**How do you interpret and report t-test results in terms of practical significance for business decisions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 191
-- [ ] Done
-
-**What are the considerations for using t-tests with ratio data versus interval data?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 192
-- [ ] Done
-
-**How do you use t-tests in the context of propensity score matching for causal inference?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 193
-- [ ] Done
-
-**In psychology research, how do you handle ceiling and floor effects when using t-tests?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 194
-- [ ] Done
-
-**How do you calculate sample size requirements for t-tests when planning future studies?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 195
-- [ ] Done
-
-**What's the impact of measurement error on t-test results and how do you account for it?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 196
-- [ ] Done
-
-**How do you use t-tests to analyze residuals and validate regression model assumptions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 197
-- [ ] Done
-
-**In environmental studies, how do you use t-tests to compare pollution levels before and after interventions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 198
-- [ ] Done
-
-**How do you communicate t-test results effectively to non-statistical stakeholders while maintaining accuracy?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 199
-- [ ] Done
-
-**How do you decide between one-way and two-way ANOVA when designing an experiment with multiple factors?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 200
-- [ ] Done
-
-**In marketing research, how do you use ANOVA to compare the effectiveness of different advertising campaigns across various demographic groups?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 201
-- [ ] Done
-
-**What are the assumptions of ANOVA and how do you test for violations like unequal variances or non-normality?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 202
-- [ ] Done
-
-**How do you interpret the F-statistic and its relationship to effect size in practical business applications?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 203
-- [ ] Done
-
-**When ANOVA shows significant differences, how do you use post-hoc tests to identify which specific groups differ?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 204
-- [ ] Done
-
-**How do you handle unbalanced designs in ANOVA when group sizes are unequal?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 205
-- [ ] Done
-
-**In quality control, how do you use ANOVA to analyze sources of variation in manufacturing processes?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 206
-- [ ] Done
-
-**What's the difference between fixed effects and random effects in ANOVA, and how does this impact interpretation?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 207
-- [ ] Done
-
-**How do you calculate and interpret eta-squared or partial eta-squared as measures of effect size?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 208
-- [ ] Done
-
-**In A/B testing with multiple variants, how do you use ANOVA instead of multiple t-tests?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 209
-- [ ] Done
-
-**How do you handle missing data in ANOVA designs while maintaining statistical validity?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 210
-- [ ] Done
-
-**What are the advantages of mixed-effects ANOVA when dealing with repeated measures data?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 211
-- [ ] Done
-
-**How do you use ANOVA to decompose total variance into between-group and within-group components?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 212
-- [ ] Done
-
-**In clinical trials, how do you use ANOVA to analyze treatment effects while controlling for baseline characteristics?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 213
-- [ ] Done
-
-**How do you interpret interaction effects in two-way ANOVA and their practical implications?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 214
-- [ ] Done
-
-**What are the differences between Type I, Type II, and Type III sums of squares in ANOVA?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 215
-- [ ] Done
-
-**How do you use Levene's test or Bartlett's test to check homogeneity of variance assumptions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 216
-- [ ] Done
-
-**In educational research, how do you use nested ANOVA to analyze student performance across schools and classrooms?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 217
-- [ ] Done
-
-**How do you calculate sample size requirements for ANOVA to achieve adequate statistical power?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 218
-- [ ] Done
-
-**What are the non-parametric alternatives to ANOVA (Kruskal-Wallis, Friedman) and when should you use them?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 219
-- [ ] Done
-
-**How do you use contrast analysis in ANOVA to test specific hypotheses about group differences?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 220
-- [ ] Done
-
-**In survey research, how do you use ANOVA to analyze differences across multiple demographic variables simultaneously?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 221
-- [ ] Done
-
-**How do you handle outliers in ANOVA and assess their impact on results?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 222
-- [ ] Done
-
-**What's the relationship between ANOVA and linear regression, and when might you prefer each approach?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 223
-- [ ] Done
-
-**How do you use MANOVA (Multivariate ANOVA) when you have multiple dependent variables?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 224
-- [ ] Done
-
-**In business analytics, how do you use ANOVA to optimize product pricing across different market segments?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 225
-- [ ] Done
-
-**How do you interpret and report confidence intervals for group means in ANOVA results?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 226
-- [ ] Done
-
-**What are the implications of sphericity assumptions in repeated measures ANOVA and how do you test for them?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 227
-- [ ] Done
-
-**How do you use ANCOVA (Analysis of Covariance) to control for confounding variables?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 228
-- [ ] Done
-
-**In manufacturing, how do you use factorial ANOVA to optimize multiple process parameters simultaneously?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 229
-- [ ] Done
-
-**How do you handle heteroscedasticity in ANOVA using robust methods or transformations?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 230
-- [ ] Done
-
-**What's the difference between within-subjects and between-subjects ANOVA designs?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 231
-- [ ] Done
-
-**How do you use ANOVA in the context of experimental design to evaluate treatment combinations?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 232
-- [ ] Done
-
-**In market research, how do you use ANOVA to analyze customer satisfaction across multiple touchpoints?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 233
-- [ ] Done
-
-**How do you calculate and interpret confidence intervals for contrasts in ANOVA?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 234
-- [ ] Done
-
-**What are the considerations for using ANOVA with ordinal data (like Likert scales)?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 235
-- [ ] Done
-
-**How do you use permutation tests as a robust alternative to traditional ANOVA?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 236
-- [ ] Done
-
-**In psychology research, how do you use ANOVA to analyze the effects of multiple interventions?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 237
-- [ ] Done
-
-**How do you handle the multiple comparisons problem in ANOVA with many groups?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 238
-- [ ] Done
-
-**What's the impact of unequal group sizes on ANOVA results and how do you address it?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 239
 - [ ] Done
 
 **How do you use ANOVA to validate machine learning model performance across different subgroups?**
@@ -4008,7 +5005,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 240
+## Question 181
 - [ ] Done
 
 **In environmental studies, how do you use ANOVA to compare pollution levels across multiple locations and time periods?**
@@ -4017,7 +5014,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 241
+## Question 182
 - [ ] Done
 
 **How do you interpret and use the Mean Square Error (MSE) from ANOVA for further analysis?**
@@ -4026,7 +5023,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 242
+## Question 183
 - [ ] Done
 
 **What are the advantages of using generalized linear models instead of traditional ANOVA?**
@@ -4035,7 +5032,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 243
+## Question 184
 - [ ] Done
 
 **How do you use ANOVA results to calculate confidence intervals for predicted values?**
@@ -4044,7 +5041,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 244
+## Question 185
 - [ ] Done
 
 **In sports analytics, how do you use ANOVA to compare player performance across different conditions?**
@@ -4053,7 +5050,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 245
+## Question 186
 - [ ] Done
 
 **How do you handle time-series data in repeated measures ANOVA designs?**
@@ -4062,7 +5059,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 246
+## Question 187
 - [ ] Done
 
 **What's the relationship between ANOVA F-tests and individual t-tests for pairwise comparisons?**
@@ -4071,7 +5068,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 247
+## Question 188
 - [ ] Done
 
 **How do you use ANOVA in the context of A/B/n testing with multiple experimental conditions?**
@@ -4080,7 +5077,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 248
+## Question 189
 - [ ] Done
 
 **How do you communicate ANOVA results effectively to stakeholders who need actionable insights?**
@@ -4089,7 +5086,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 249
+## Question 190
 - [ ] Done
 
 **How do you choose between the chi-square test of independence and the chi-square goodness-of-fit test?**
@@ -4098,7 +5095,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 250
+## Question 191
 - [ ] Done
 
 **In marketing research, how do you use chi-square tests to analyze the relationship between customer demographics and purchase behavior?**
@@ -4107,7 +5104,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 251
+## Question 192
 - [ ] Done
 
 **What are the minimum expected frequency requirements for chi-square tests and how do you handle violations?**
@@ -4116,7 +5113,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 252
+## Question 193
 - [ ] Done
 
 **How do you calculate and interpret Cramér's V as a measure of effect size for chi-square tests?**
@@ -4125,7 +5122,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 253
+## Question 194
 - [ ] Done
 
 **When analyzing survey data with multiple response categories, how do you apply chi-square tests appropriately?**
@@ -4134,7 +5131,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 254
+## Question 195
 - [ ] Done
 
 **How do you use the chi-square test to validate whether your data follows a specific theoretical distribution?**
@@ -4143,7 +5140,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 255
+## Question 196
 - [ ] Done
 
 **In quality control, how do you use chi-square tests to analyze defect patterns across different production shifts?**
@@ -4152,7 +5149,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 256
+## Question 197
 - [ ] Done
 
 **What's the difference between Pearson's chi-square and likelihood ratio chi-square tests?**
@@ -4161,7 +5158,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 257
+## Question 198
 - [ ] Done
 
 **How do you handle small sample sizes or sparse contingency tables in chi-square analysis?**
@@ -4170,7 +5167,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 258
+## Question 199
 - [ ] Done
 
 **In clinical research, how do you use chi-square tests to analyze the association between treatment and outcomes?**
@@ -4179,7 +5176,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 259
+## Question 200
 - [ ] Done
 
 **How do you interpret standardized residuals from chi-square tests to identify which cells contribute most to significance?**
@@ -4188,7 +5185,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 260
+## Question 201
 - [ ] Done
 
 **What are the assumptions of the chi-square test and how do you verify them in practice?**
@@ -4197,7 +5194,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 261
+## Question 202
 - [ ] Done
 
 **How do you use chi-square tests in feature selection for machine learning with categorical variables?**
@@ -4206,7 +5203,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 262
+## Question 203
 - [ ] Done
 
 **In A/B testing, how do you use chi-square tests to compare conversion rates between multiple groups?**
@@ -4215,7 +5212,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 263
+## Question 204
 - [ ] Done
 
 **How do you calculate confidence intervals for proportions when using chi-square tests?**
@@ -4224,7 +5221,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 264
+## Question 205
 - [ ] Done
 
 **What's the relationship between chi-square tests and logistic regression for categorical data analysis?**
@@ -4233,7 +5230,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 265
+## Question 206
 - [ ] Done
 
 **How do you use Fisher's exact test as an alternative when chi-square assumptions are violated?**
@@ -4242,7 +5239,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 266
+## Question 207
 - [ ] Done
 
 **In market segmentation, how do you use chi-square tests to identify significant associations between variables?**
@@ -4251,16 +5248,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 267
-- [ ] Done
-
-**How do you handle multiple testing corrections when conducting several chi-square tests?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 268
+## Question 208
 - [ ] Done
 
 **What are the differences between chi-square tests and G-tests (log-likelihood ratio tests)?**
@@ -4269,7 +5257,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 269
+## Question 209
 - [ ] Done
 
 **How do you use chi-square tests to analyze the effectiveness of different website layouts on user behavior?**
@@ -4278,7 +5266,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 270
+## Question 210
 - [ ] Done
 
 **In educational assessment, how do you use chi-square tests to analyze item performance across different student groups?**
@@ -4287,7 +5275,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 271
+## Question 211
 - [ ] Done
 
 **How do you interpret the degrees of freedom in chi-square tests for different contingency table sizes?**
@@ -4296,7 +5284,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 272
+## Question 212
 - [ ] Done
 
 **What's the impact of combining categories on chi-square test results and when is it appropriate?**
@@ -4305,7 +5293,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 273
+## Question 213
 - [ ] Done
 
 **How do you use chi-square tests to validate randomization in experimental designs?**
@@ -4314,7 +5302,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 274
+## Question 214
 - [ ] Done
 
 **In survey research, how do you use chi-square tests to analyze response patterns across different demographic groups?**
@@ -4323,7 +5311,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 275
+## Question 215
 - [ ] Done
 
 **How do you calculate and interpret odds ratios from 2×2 contingency tables analyzed with chi-square tests?**
@@ -4332,7 +5320,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 276
+## Question 216
 - [ ] Done
 
 **What are the alternatives to chi-square tests for ordinal categorical data?**
@@ -4341,7 +5329,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 277
+## Question 217
 - [ ] Done
 
 **How do you use Monte Carlo simulation to calculate exact p-values for chi-square tests?**
@@ -4350,7 +5338,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 278
+## Question 218
 - [ ] Done
 
 **In manufacturing, how do you use chi-square tests to analyze the relationship between process conditions and product quality?**
@@ -4359,7 +5347,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 279
+## Question 219
 - [ ] Done
 
 **How do you handle missing data in categorical variables when conducting chi-square tests?**
@@ -4368,7 +5356,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 280
+## Question 220
 - [ ] Done
 
 **What's the relationship between chi-square tests and measures of association like phi coefficient?**
@@ -4377,7 +5365,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 281
+## Question 221
 - [ ] Done
 
 **How do you use chi-square tests in genome-wide association studies (GWAS) for medical research?**
@@ -4386,7 +5374,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 282
+## Question 222
 - [ ] Done
 
 **In business analytics, how do you use chi-square tests to analyze customer churn patterns?**
@@ -4395,7 +5383,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 283
+## Question 223
 - [ ] Done
 
 **How do you interpret chi-square test results when the practical significance differs from statistical significance?**
@@ -4404,7 +5392,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 284
+## Question 224
 - [ ] Done
 
 **What are the considerations for using chi-square tests with ordered categorical variables?**
@@ -4413,7 +5401,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 285
+## Question 225
 - [ ] Done
 
 **How do you use chi-square tests to validate machine learning model predictions for classification problems?**
@@ -4422,7 +5410,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 286
+## Question 226
 - [ ] Done
 
 **In epidemiology, how do you use chi-square tests to analyze disease patterns across populations?**
@@ -4431,7 +5419,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 287
+## Question 227
 - [ ] Done
 
 **How do you calculate sample size requirements for chi-square tests to achieve desired statistical power?**
@@ -4440,7 +5428,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 288
+## Question 228
 - [ ] Done
 
 **What's the impact of table structure (rows vs. columns) on chi-square test interpretation?**
@@ -4449,7 +5437,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 289
+## Question 229
 - [ ] Done
 
 **How do you use chi-square tests in content analysis to identify patterns in categorical text data?**
@@ -4458,7 +5446,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 290
+## Question 230
 - [ ] Done
 
 **In sports analytics, how do you use chi-square tests to analyze performance patterns across different conditions?**
@@ -4467,7 +5455,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 291
+## Question 231
 - [ ] Done
 
 **How do you handle zero cells in contingency tables when conducting chi-square tests?**
@@ -4476,7 +5464,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 292
+## Question 232
 - [ ] Done
 
 **What are the advantages of using Bayesian approaches instead of frequentist chi-square tests?**
@@ -4485,7 +5473,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 293
+## Question 233
 - [ ] Done
 
 **How do you use chi-square tests to analyze the relationship between multiple categorical predictors?**
@@ -4494,7 +5482,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 294
+## Question 234
 - [ ] Done
 
 **In psychology research, how do you use chi-square tests to analyze response patterns in behavioral studies?**
@@ -4503,7 +5491,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 295
+## Question 235
 - [ ] Done
 
 **How do you interpret and report chi-square test results for meta-analysis purposes?**
@@ -4512,7 +5500,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 296
+## Question 236
 - [ ] Done
 
 **What's the relationship between chi-square tests and other measures of categorical association?**
@@ -4521,7 +5509,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 297
+## Question 237
 - [ ] Done
 
 **How do you use chi-square tests in the context of propensity score matching for causal inference?**
@@ -4530,7 +5518,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 298
+## Question 238
 - [ ] Done
 
 **How do you communicate chi-square test results effectively to non-statistical audiences while maintaining accuracy?**
@@ -4539,7 +5527,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 299
+## Question 239
 - [ ] Done
 
 **How do you decide between a t-test and Mann-Whitney U test when comparing two groups with skewed data?**
@@ -4548,7 +5536,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 300
+## Question 240
 - [ ] Done
 
 **In what situations would you choose Spearman's rank correlation over Pearson's correlation coefficient?**
@@ -4557,7 +5545,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 301
+## Question 241
 - [ ] Done
 
 **How do you assess normality assumptions using both statistical tests and graphical methods before choosing test types?**
@@ -4566,7 +5554,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 302
+## Question 242
 - [ ] Done
 
 **When analyzing Likert scale data, what factors determine whether to use parametric or non-parametric approaches?**
@@ -4575,7 +5563,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 303
+## Question 243
 - [ ] Done
 
 **How do you compare the statistical power of parametric vs. non-parametric tests for the same dataset?**
@@ -4584,7 +5572,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 304
+## Question 244
 - [ ] Done
 
 **In quality control with non-normal process data, how do you choose appropriate statistical tests?**
@@ -4593,7 +5581,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 305
+## Question 245
 - [ ] Done
 
 **What are the trade-offs between robustness and efficiency when choosing between parametric and non-parametric tests?**
@@ -4602,7 +5590,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 306
+## Question 246
 - [ ] Done
 
 **How do you handle tied values in non-parametric tests and what impact do they have on results?**
@@ -4611,7 +5599,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 307
+## Question 247
 - [ ] Done
 
 **When would you use Kruskal-Wallis test instead of one-way ANOVA for comparing multiple groups?**
@@ -4620,7 +5608,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 308
+## Question 248
 - [ ] Done
 
 **How do you determine when sample size is sufficient to rely on central limit theorem for parametric tests?**
@@ -4629,7 +5617,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 309
+## Question 249
 - [ ] Done
 
 **In clinical trials with ordinal outcomes, how do you choose between parametric and non-parametric approaches?**
@@ -4638,7 +5626,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 310
+## Question 250
 - [ ] Done
 
 **What are the assumptions of non-parametric tests and how do they differ from parametric assumptions?**
@@ -4647,7 +5635,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 311
+## Question 251
 - [ ] Done
 
 **How do you use bootstrapping as an alternative to both parametric and traditional non-parametric methods?**
@@ -4656,7 +5644,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 312
+## Question 252
 - [ ] Done
 
 **When analyzing time-to-event data, how do you choose between parametric and non-parametric survival analysis?**
@@ -4665,7 +5653,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 313
+## Question 253
 - [ ] Done
 
 **How do you interpret effect sizes differently for parametric vs. non-parametric tests?**
@@ -4674,7 +5662,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 314
+## Question 254
 - [ ] Done
 
 **In market research with small sample sizes, what guides your choice between parametric and non-parametric tests?**
@@ -4683,7 +5671,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 315
+## Question 255
 - [ ] Done
 
 **How do you handle heteroscedasticity when deciding between parametric and non-parametric approaches?**
@@ -4692,7 +5680,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 316
+## Question 256
 - [ ] Done
 
 **What are the implications of using non-parametric tests when data actually meets parametric assumptions?**
@@ -4701,7 +5689,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 317
+## Question 257
 - [ ] Done
 
 **How do you use permutation tests as a compromise between parametric and traditional non-parametric methods?**
@@ -4710,7 +5698,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 318
+## Question 258
 - [ ] Done
 
 **In educational assessment, how do you choose statistical approaches for analyzing test score data?**
@@ -4719,7 +5707,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 319
+## Question 259
 - [ ] Done
 
 **How do you compare confidence intervals from parametric vs. non-parametric tests?**
@@ -4728,7 +5716,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 320
+## Question 260
 - [ ] Done
 
 **When analyzing customer satisfaction data, what determines your choice of statistical approach?**
@@ -4737,7 +5725,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 321
+## Question 261
 - [ ] Done
 
 **How do you use robust parametric methods as alternatives to non-parametric tests?**
@@ -4746,7 +5734,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 322
+## Question 262
 - [ ] Done
 
 **What are the computational considerations when choosing between parametric and non-parametric tests?**
@@ -4755,7 +5743,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 323
+## Question 263
 - [ ] Done
 
 **How do you handle missing data differently in parametric vs. non-parametric analyses?**
@@ -4764,7 +5752,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 324
+## Question 264
 - [ ] Done
 
 **In environmental studies with irregular data patterns, how do you select appropriate statistical methods?**
@@ -4773,7 +5761,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 325
+## Question 265
 - [ ] Done
 
 **How do you use simulation studies to compare the performance of parametric vs. non-parametric tests?**
@@ -4782,7 +5770,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 326
+## Question 266
 - [ ] Done
 
 **What role does measurement scale (nominal, ordinal, interval, ratio) play in test selection?**
@@ -4791,7 +5779,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 327
+## Question 267
 - [ ] Done
 
 **How do you address multiple comparisons in non-parametric tests compared to parametric approaches?**
@@ -4800,7 +5788,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 328
+## Question 268
 - [ ] Done
 
 **In business analytics, how do you choose tests for analyzing KPIs with different distributions?**
@@ -4809,7 +5797,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 329
+## Question 269
 - [ ] Done
 
 **How do you use goodness-of-fit tests to inform your choice between parametric and non-parametric methods?**
@@ -4818,7 +5806,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 330
+## Question 270
 - [ ] Done
 
 **What are the reporting differences when presenting results from parametric vs. non-parametric tests?**
@@ -4827,7 +5815,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 331
+## Question 271
 - [ ] Done
 
 **How do you handle repeated measures data when choosing between parametric and non-parametric approaches?**
@@ -4836,7 +5824,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 332
+## Question 272
 - [ ] Done
 
 **In psychology research, how do reaction time data characteristics influence statistical test choice?**
@@ -4845,7 +5833,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 333
+## Question 273
 - [ ] Done
 
 **How do you use transformation techniques to enable parametric testing of non-normal data?**
@@ -4854,7 +5842,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 334
+## Question 274
 - [ ] Done
 
 **What are the implications of using non-parametric tests for regression analysis?**
@@ -4863,7 +5851,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 335
+## Question 275
 - [ ] Done
 
 **How do you choose between parametric and non-parametric methods for time-series analysis?**
@@ -4872,7 +5860,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 336
+## Question 276
 - [ ] Done
 
 **In manufacturing, how do process data characteristics determine appropriate statistical approaches?**
@@ -4881,7 +5869,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 337
+## Question 277
 - [ ] Done
 
 **How do you handle zero-inflated data when selecting between parametric and non-parametric tests?**
@@ -4890,7 +5878,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 338
+## Question 278
 - [ ] Done
 
 **What are the advantages of distribution-free methods in exploratory data analysis?**
@@ -4899,7 +5887,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 339
+## Question 279
 - [ ] Done
 
 **How do you use diagnostic plots to verify the appropriateness of your chosen statistical approach?**
@@ -4908,7 +5896,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 340
+## Question 280
 - [ ] Done
 
 **In survey research, how do complex sampling designs affect the choice between parametric and non-parametric methods?**
@@ -4917,7 +5905,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 341
+## Question 281
 - [ ] Done
 
 **How do you compare the interpretability of results between parametric and non-parametric approaches?**
@@ -4926,7 +5914,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 342
+## Question 282
 - [ ] Done
 
 **What role does prior knowledge about population distributions play in test selection?**
@@ -4935,7 +5923,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 343
+## Question 283
 - [ ] Done
 
 **How do you handle outliers differently depending on whether you're using parametric or non-parametric tests?**
@@ -4944,7 +5932,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 344
+## Question 284
 - [ ] Done
 
 **In clinical research, how do you choose statistical methods for analyzing biomarker data?**
@@ -4953,7 +5941,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 345
+## Question 285
 - [ ] Done
 
 **How do you use cross-validation to assess the appropriateness of parametric vs. non-parametric models?**
@@ -4962,7 +5950,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 346
+## Question 286
 - [ ] Done
 
 **What are the ethical considerations in choosing statistical methods that may affect study conclusions?**
@@ -4971,7 +5959,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 347
+## Question 287
 - [ ] Done
 
 **How do you communicate the rationale for your statistical approach choice to stakeholders?**
@@ -4980,7 +5968,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 348
+## Question 288
 - [ ] Done
 
 **In machine learning contexts, how do you choose between parametric and non-parametric approaches for model evaluation?**
@@ -4989,61 +5977,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 349
-- [ ] Done
-
-**How do you formulate null and alternative hypotheses for a business problem involving customer retention rates?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 350
-- [ ] Done
-
-**What factors determine your choice of significance level (α) in different research contexts?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 351
-- [ ] Done
-
-**How do you calculate and interpret statistical power when planning an experiment?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 352
-- [ ] Done
-
-**In A/B testing, how do you handle the multiple testing problem when running several simultaneous tests?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 353
-- [ ] Done
-
-**What's the difference between Type I and Type II errors, and how do you balance them in practice?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 354
-- [ ] Done
-
-**How do you determine adequate sample size for hypothesis testing given effect size and power requirements?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 355
+## Question 289
 - [ ] Done
 
 **When should you use one-tailed vs. two-tailed tests, and how does this affect your conclusions?**
@@ -5052,16 +5986,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 356
-- [ ] Done
-
-**How do you interpret p-values correctly and avoid common misinterpretations?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 357
+## Question 290
 - [ ] Done
 
 **In quality control, how do you set up hypothesis tests for monitoring process performance?**
@@ -5070,16 +5995,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 358
-- [ ] Done
-
-**What are the steps for conducting a hypothesis test and how do you ensure methodological rigor?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 359
+## Question 291
 - [ ] Done
 
 **How do you handle sequential testing and interim analyses in clinical trials while controlling Type I error?**
@@ -5088,7 +6004,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 360
+## Question 292
 - [ ] Done
 
 **What are equivalence and non-inferiority tests, and how do they differ from traditional superiority testing?**
@@ -5097,7 +6013,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 361
+## Question 293
 - [ ] Done
 
 **How do you use Bayesian hypothesis testing as an alternative to frequentist approaches?**
@@ -5106,7 +6022,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 362
+## Question 294
 - [ ] Done
 
 **In machine learning model evaluation, how do you test hypotheses about model performance differences?**
@@ -5115,7 +6031,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 363
+## Question 295
 - [ ] Done
 
 **How do you adjust for multiple comparisons using methods like Bonferroni, FDR, or Holm corrections?**
@@ -5124,7 +6040,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 364
+## Question 296
 - [ ] Done
 
 **What are adaptive designs in hypothesis testing and when are they beneficial?**
@@ -5133,7 +6049,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 365
+## Question 297
 - [ ] Done
 
 **How do you conduct hypothesis tests with composite null or alternative hypotheses?**
@@ -5142,7 +6058,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 366
+## Question 298
 - [ ] Done
 
 **In survival analysis, how do you test hypotheses about hazard ratios and survival curves?**
@@ -5151,7 +6067,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 367
+## Question 299
 - [ ] Done
 
 **How do you use permutation tests when traditional parametric assumptions are violated?**
@@ -5160,7 +6076,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 368
+## Question 300
 - [ ] Done
 
 **What's the relationship between confidence intervals and hypothesis testing results?**
@@ -5169,7 +6085,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 369
+## Question 301
 - [ ] Done
 
 **How do you handle missing data in hypothesis testing while maintaining validity?**
@@ -5178,7 +6094,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 370
+## Question 302
 - [ ] Done
 
 **In environmental studies, how do you test hypotheses about pollution levels before and after interventions?**
@@ -5187,7 +6103,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 371
+## Question 303
 - [ ] Done
 
 **How do you use cross-validation techniques to validate hypothesis testing assumptions?**
@@ -5196,7 +6112,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 372
+## Question 304
 - [ ] Done
 
 **What are the considerations for hypothesis testing with time-series data that may be autocorrelated?**
@@ -5205,7 +6121,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 373
+## Question 305
 - [ ] Done
 
 **How do you communicate hypothesis testing results to stakeholders who lack statistical background?**
@@ -5214,7 +6130,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 374
+## Question 306
 - [ ] Done
 
 **In psychology research, how do you handle effect sizes that are statistically significant but practically meaningless?**
@@ -5223,7 +6139,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 375
+## Question 307
 - [ ] Done
 
 **How do you use meta-analysis techniques to combine hypothesis test results across multiple studies?**
@@ -5232,7 +6148,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 376
+## Question 308
 - [ ] Done
 
 **What are the implications of data snooping and p-hacking on hypothesis testing validity?**
@@ -5241,7 +6157,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 377
+## Question 309
 - [ ] Done
 
 **How do you conduct hypothesis tests for proportions and rates in business applications?**
@@ -5250,7 +6166,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 378
+## Question 310
 - [ ] Done
 
 **In clinical trials, how do you handle interim monitoring and early stopping rules?**
@@ -5259,7 +6175,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 379
+## Question 311
 - [ ] Done
 
 **How do you use bootstrap methods to create hypothesis tests for complex statistics?**
@@ -5268,7 +6184,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 380
+## Question 312
 - [ ] Done
 
 **What's the role of prior probability in interpreting hypothesis test results?**
@@ -5277,7 +6193,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 381
+## Question 313
 - [ ] Done
 
 **How do you conduct goodness-of-fit tests to validate distributional assumptions?**
@@ -5286,7 +6202,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 382
+## Question 314
 - [ ] Done
 
 **In quality control, how do you use statistical process control charts for hypothesis testing?**
@@ -5295,7 +6211,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 383
+## Question 315
 - [ ] Done
 
 **How do you handle hypothesis testing when dealing with big data and computational constraints?**
@@ -5304,7 +6220,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 384
+## Question 316
 - [ ] Done
 
 **What are the differences between classical, Bayesian, and likelihood-based hypothesis testing approaches?**
@@ -5313,7 +6229,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 385
+## Question 317
 - [ ] Done
 
 **How do you use simulation studies to evaluate the performance of different hypothesis testing procedures?**
@@ -5322,7 +6238,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 386
+## Question 318
 - [ ] Done
 
 **In market research, how do you test hypotheses about consumer preferences across segments?**
@@ -5331,7 +6247,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 387
+## Question 319
 - [ ] Done
 
 **How do you handle testing hypotheses about correlations and associations between variables?**
@@ -5340,7 +6256,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 388
+## Question 320
 - [ ] Done
 
 **What are the considerations for hypothesis testing in observational studies vs. randomized experiments?**
@@ -5349,7 +6265,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 389
+## Question 321
 - [ ] Done
 
 **How do you use replication studies to validate hypothesis testing results across different contexts?**
@@ -5358,7 +6274,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 390
+## Question 322
 - [ ] Done
 
 **In financial analysis, how do you test hypotheses about market efficiency and price movements?**
@@ -5367,7 +6283,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 391
+## Question 323
 - [ ] Done
 
 **How do you handle hypothesis testing for clustered or hierarchical data structures?**
@@ -5376,7 +6292,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 392
+## Question 324
 - [ ] Done
 
 **What's the impact of measurement error on hypothesis testing results and how do you account for it?**
@@ -5385,7 +6301,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 393
+## Question 325
 - [ ] Done
 
 **How do you use decision trees to guide hypothesis testing in exploratory research?**
@@ -5394,7 +6310,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 394
+## Question 326
 - [ ] Done
 
 **In educational assessment, how do you test hypotheses about learning outcomes and intervention effectiveness?**
@@ -5403,7 +6319,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 395
+## Question 327
 - [ ] Done
 
 **How do you handle hypothesis testing when your data violates independence assumptions?**
@@ -5412,7 +6328,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 396
+## Question 328
 - [ ] Done
 
 **What are the ethical implications of hypothesis testing in medical research and public policy?**
@@ -5421,7 +6337,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 397
+## Question 329
 - [ ] Done
 
 **How do you use machine learning techniques to enhance traditional hypothesis testing approaches?**
@@ -5430,7 +6346,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 398
+## Question 330
 - [ ] Done
 
 **In sports analytics, how do you test hypotheses about player performance and team strategies using statistical methods?**
@@ -5439,16 +6355,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 399
-- [ ] Done
-
-**How do you interpret a p-value of 0.03 in the context of a business decision about launching a new product?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 400
+## Question 331
 - [ ] Done
 
 **What's the difference between statistical significance (p-value) and practical significance in real-world applications?**
@@ -5457,25 +6364,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 401
-- [ ] Done
-
-**How do you calculate and interpret a 95% confidence interval for a population mean?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 402
-- [ ] Done
-
-**When would you choose a 90% vs. 99% confidence level, and how does this affect interval width?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 403
+## Question 332
 - [ ] Done
 
 **How do you explain to stakeholders why a 95% confidence interval doesn't mean there's a 95% probability the parameter lies within it?**
@@ -5484,7 +6373,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 404
+## Question 333
 - [ ] Done
 
 **In A/B testing, how do you use p-values to determine when to stop a test and make decisions?**
@@ -5493,7 +6382,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 405
+## Question 334
 - [ ] Done
 
 **How do you handle multiple testing corrections when calculating several p-values simultaneously?**
@@ -5502,25 +6391,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 406
-- [ ] Done
-
-**What are the common misinterpretations of p-values and how do you avoid them?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 407
-- [ ] Done
-
-**How do you calculate confidence intervals for proportions in survey research?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 408
+## Question 335
 - [ ] Done
 
 **In quality control, how do you use confidence intervals to set acceptable tolerance ranges?**
@@ -5529,7 +6400,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 409
+## Question 336
 - [ ] Done
 
 **How does sample size affect the width of confidence intervals and the precision of p-values?**
@@ -5538,25 +6409,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 410
-- [ ] Done
-
-**What's the relationship between Type I error rate and p-value thresholds in hypothesis testing?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 411
-- [ ] Done
-
-**How do you calculate confidence intervals for the difference between two means?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 412
+## Question 337
 - [ ] Done
 
 **In clinical trials, how do you interpret p-values when testing for drug efficacy vs. safety?**
@@ -5565,7 +6418,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 413
+## Question 338
 - [ ] Done
 
 **How do you use bootstrap methods to calculate confidence intervals for complex statistics?**
@@ -5574,7 +6427,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 414
+## Question 339
 - [ ] Done
 
 **What are prediction intervals and how do they differ from confidence intervals?**
@@ -5583,7 +6436,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 415
+## Question 340
 - [ ] Done
 
 **How do you handle p-value inflation in studies with multiple endpoints or subgroups?**
@@ -5592,7 +6445,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 416
+## Question 341
 - [ ] Done
 
 **In regression analysis, how do you interpret confidence intervals for regression coefficients?**
@@ -5601,7 +6454,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 417
+## Question 342
 - [ ] Done
 
 **How do you calculate and interpret confidence intervals for correlation coefficients?**
@@ -5610,7 +6463,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 418
+## Question 343
 - [ ] Done
 
 **What's the impact of data transformation on p-values and confidence intervals?**
@@ -5619,7 +6472,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 419
+## Question 344
 - [ ] Done
 
 **How do you use p-values in model selection and feature importance assessment?**
@@ -5628,25 +6481,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 420
-- [ ] Done
-
-**In market research, how do you calculate confidence intervals for customer satisfaction scores?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 421
-- [ ] Done
-
-**How do you interpret overlapping vs. non-overlapping confidence intervals between groups?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 422
+## Question 345
 - [ ] Done
 
 **What are exact vs. approximate confidence intervals and when do you use each?**
@@ -5655,7 +6490,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 423
+## Question 346
 - [ ] Done
 
 **How do you handle zero values or boundary conditions when calculating confidence intervals?**
@@ -5664,7 +6499,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 424
+## Question 347
 - [ ] Done
 
 **In time-series analysis, how do you calculate confidence intervals for forecasts?**
@@ -5673,7 +6508,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 425
+## Question 348
 - [ ] Done
 
 **How do you use credible intervals in Bayesian analysis vs. confidence intervals in frequentist statistics?**
@@ -5682,7 +6517,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 426
+## Question 349
 - [ ] Done
 
 **What's the relationship between confidence intervals and hypothesis testing decisions?**
@@ -5691,7 +6526,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 427
+## Question 350
 - [ ] Done
 
 **How do you calculate confidence intervals for odds ratios and relative risks?**
@@ -5700,7 +6535,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 428
+## Question 351
 - [ ] Done
 
 **In experimental design, how do you use p-values to optimize sample allocation between treatment groups?**
@@ -5709,7 +6544,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 429
+## Question 352
 - [ ] Done
 
 **How do you handle missing data when calculating confidence intervals?**
@@ -5718,7 +6553,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 430
+## Question 353
 - [ ] Done
 
 **What are simultaneous confidence intervals and when are they necessary?**
@@ -5727,7 +6562,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 431
+## Question 354
 - [ ] Done
 
 **How do you interpret p-values from one-tailed vs. two-tailed tests in business contexts?**
@@ -5736,7 +6571,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 432
+## Question 355
 - [ ] Done
 
 **In survival analysis, how do you calculate confidence intervals for median survival times?**
@@ -5745,7 +6580,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 433
+## Question 356
 - [ ] Done
 
 **How do you use p-value functions to understand the strength of evidence across different effect sizes?**
@@ -5754,7 +6589,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 434
+## Question 357
 - [ ] Done
 
 **What's the impact of outliers on confidence interval calculations and how do you handle them?**
@@ -5763,7 +6598,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 435
+## Question 358
 - [ ] Done
 
 **How do you calculate confidence intervals for variance and standard deviation?**
@@ -5772,7 +6607,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 436
+## Question 359
 - [ ] Done
 
 **In meta-analysis, how do you combine p-values and confidence intervals across studies?**
@@ -5781,7 +6616,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 437
+## Question 360
 - [ ] Done
 
 **How do you use confidence intervals to assess the precision of diagnostic test accuracy measures?**
@@ -5790,7 +6625,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 438
+## Question 361
 - [ ] Done
 
 **What are the considerations for reporting p-values and confidence intervals in scientific publications?**
@@ -5799,7 +6634,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 439
+## Question 362
 - [ ] Done
 
 **How do you use p-values in sequential testing and adaptive trial designs?**
@@ -5808,7 +6643,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 440
+## Question 363
 - [ ] Done
 
 **In business analytics, how do you calculate confidence intervals for ROI and other financial metrics?**
@@ -5817,7 +6652,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 441
+## Question 364
 - [ ] Done
 
 **How do you interpret confidence intervals when they include or exclude clinically meaningful values?**
@@ -5826,7 +6661,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 442
+## Question 365
 - [ ] Done
 
 **What's the difference between confidence intervals and tolerance intervals in quality control?**
@@ -5835,7 +6670,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 443
+## Question 366
 - [ ] Done
 
 **How do you use nonparametric methods to calculate confidence intervals for medians and percentiles?**
@@ -5844,7 +6679,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 444
+## Question 367
 - [ ] Done
 
 **In machine learning, how do you calculate confidence intervals for model predictions?**
@@ -5853,7 +6688,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 445
+## Question 368
 - [ ] Done
 
 **How do you handle asymmetric confidence intervals and what do they indicate?**
@@ -5862,7 +6697,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 446
+## Question 369
 - [ ] Done
 
 **What's the impact of data dependencies (clustering, time series) on p-value validity?**
@@ -5871,7 +6706,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 447
+## Question 370
 - [ ] Done
 
 **How do you use profile likelihood methods to calculate confidence intervals for complex models?**
@@ -5880,7 +6715,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 448
+## Question 371
 - [ ] Done
 
 **In environmental studies, how do you communicate uncertainty using confidence intervals for policy decisions?**
@@ -5889,16 +6724,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 449
-- [ ] Done
-
-**How do you distinguish between correlation and causation when analyzing the relationship between advertising spend and sales?**
-
-**Answer:** _[To be filled]_
-
----
-
-## Question 450
+## Question 372
 - [ ] Done
 
 **What are confounding variables and how do they affect the interpretation of correlational studies?**
@@ -5907,7 +6733,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 451
+## Question 373
 - [ ] Done
 
 **How do you use experimental design to establish causal relationships vs. observational studies that show correlation?**
@@ -5916,7 +6742,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 452
+## Question 374
 - [ ] Done
 
 **In business intelligence, how do you avoid the trap of assuming causation from strong correlations in KPI analysis?**
@@ -5925,7 +6751,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 453
+## Question 375
 - [ ] Done
 
 **What are the Bradford Hill criteria and how are they used to infer causation in epidemiological studies?**
@@ -5934,7 +6760,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 454
+## Question 376
 - [ ] Done
 
 **How do you use instrumental variables to identify causal effects in observational data?**
@@ -5943,7 +6769,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 455
+## Question 377
 - [ ] Done
 
 **What's the difference between spurious correlation and true correlation, and how do you identify each?**
@@ -5952,7 +6778,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 456
+## Question 378
 - [ ] Done
 
 **How do you apply the concept of temporal precedence to establish causal relationships?**
@@ -5961,7 +6787,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 457
+## Question 379
 - [ ] Done
 
 **In marketing analytics, how do you determine whether social media engagement causes sales or vice versa?**
@@ -5970,7 +6796,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 458
+## Question 380
 - [ ] Done
 
 **What are mediating and moderating variables, and how do they complicate causal inference?**
@@ -5979,7 +6805,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 459
+## Question 381
 - [ ] Done
 
 **How do you use randomized controlled trials (RCTs) to establish causation vs. relying on correlational evidence?**
@@ -5988,7 +6814,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 460
+## Question 382
 - [ ] Done
 
 **What are common examples of spurious correlations in everyday life and business contexts?**
@@ -5997,7 +6823,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 461
+## Question 383
 - [ ] Done
 
 **How do you use natural experiments to infer causation when randomized experiments aren't feasible?**
@@ -6006,7 +6832,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 462
+## Question 384
 - [ ] Done
 
 **In healthcare analytics, how do you distinguish between risk factors (correlation) and actual causes of disease?**
@@ -6015,7 +6841,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 463
+## Question 385
 - [ ] Done
 
 **What's the role of mechanism and biological plausibility in establishing causal relationships?**
@@ -6024,7 +6850,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 464
+## Question 386
 - [ ] Done
 
 **How do you use propensity score matching to reduce selection bias in causal inference?**
@@ -6033,7 +6859,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 465
+## Question 387
 - [ ] Done
 
 **What are directed acyclic graphs (DAGs) and how do they help visualize causal relationships?**
@@ -6042,7 +6868,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 466
+## Question 388
 - [ ] Done
 
 **How do you handle reverse causation when trying to establish causal direction?**
@@ -6051,7 +6877,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 467
+## Question 389
 - [ ] Done
 
 **In economics, how do you use difference-in-differences analysis to identify causal effects?**
@@ -6060,7 +6886,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 468
+## Question 390
 - [ ] Done
 
 **What's the difference between necessary causes, sufficient causes, and contributory causes?**
@@ -6069,7 +6895,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 469
+## Question 391
 - [ ] Done
 
 **How do you use longitudinal data to strengthen causal inferences compared to cross-sectional studies?**
@@ -6078,7 +6904,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 470
+## Question 392
 - [ ] Done
 
 **In product development, how do you determine whether user feedback correlations indicate causal relationships?**
@@ -6087,7 +6913,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 471
+## Question 393
 - [ ] Done
 
 **What are the challenges of establishing causation in complex systems with multiple interacting variables?**
@@ -6096,7 +6922,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 472
+## Question 394
 - [ ] Done
 
 **How do you use Granger causality tests in time-series analysis to infer causal relationships?**
@@ -6105,7 +6931,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 473
+## Question 395
 - [ ] Done
 
 **What's the difference between association, correlation, and causation in statistical analysis?**
@@ -6114,7 +6940,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 474
+## Question 396
 - [ ] Done
 
 **How do you apply causal inference methods in machine learning model interpretation?**
@@ -6123,7 +6949,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 475
+## Question 397
 - [ ] Done
 
 **In social sciences, how do you address the ethical constraints on establishing causation through experimentation?**
@@ -6132,7 +6958,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 476
+## Question 398
 - [ ] Done
 
 **What are the limitations of correlation analysis in establishing business strategies?**
@@ -6141,7 +6967,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 477
+## Question 399
 - [ ] Done
 
 **How do you use regression discontinuity design to identify causal effects?**
@@ -6150,7 +6976,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 478
+## Question 400
 - [ ] Done
 
 **In clinical research, how do you distinguish between biomarkers (correlation) and therapeutic targets (causation)?**
@@ -6159,7 +6985,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 479
+## Question 401
 - [ ] Done
 
 **How do you communicate the limitations of correlational findings to stakeholders who want causal conclusions?**
@@ -6168,7 +6994,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 480
+## Question 402
 - [ ] Done
 
 **What's the role of dose-response relationships in establishing causation?**
@@ -6177,7 +7003,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 481
+## Question 403
 - [ ] Done
 
 **How do you use counterfactual reasoning to think about causal relationships?**
@@ -6186,7 +7012,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 482
+## Question 404
 - [ ] Done
 
 **In environmental science, how do you establish causal links between pollutants and health outcomes?**
@@ -6195,7 +7021,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 483
+## Question 405
 - [ ] Done
 
 **What are the challenges of causal inference in the era of big data and machine learning?**
@@ -6204,7 +7030,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 484
+## Question 406
 - [ ] Done
 
 **How do you use mediation analysis to understand causal pathways between variables?**
@@ -6213,7 +7039,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 485
+## Question 407
 - [ ] Done
 
 **In finance, how do you distinguish between leading indicators (potential causes) and lagging indicators (effects)?**
@@ -6222,7 +7048,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 486
+## Question 408
 - [ ] Done
 
 **What's the difference between internal validity and external validity in causal studies?**
@@ -6231,7 +7057,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 487
+## Question 409
 - [ ] Done
 
 **How do you handle multiple potential causes when trying to isolate specific causal effects?**
@@ -6240,7 +7066,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 488
+## Question 410
 - [ ] Done
 
 **In education research, how do you establish whether teaching methods cause improved learning outcomes?**
@@ -6249,7 +7075,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 489
+## Question 411
 - [ ] Done
 
 **How do you use structural equation modeling (SEM) to test causal hypotheses?**
@@ -6258,7 +7084,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 490
+## Question 412
 - [ ] Done
 
 **What are the philosophical differences between causal inference and predictive modeling?**
@@ -6267,7 +7093,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 491
+## Question 413
 - [ ] Done
 
 **How do you address selection bias when trying to establish causal relationships?**
@@ -6276,7 +7102,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 492
+## Question 414
 - [ ] Done
 
 **In psychology, how do you distinguish between correlation and causation in behavioral interventions?**
@@ -6285,7 +7111,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 493
+## Question 415
 - [ ] Done
 
 **What's the role of replication studies in strengthening causal inferences?**
@@ -6294,7 +7120,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 494
+## Question 416
 - [ ] Done
 
 **How do you use causal diagrams to identify potential confounders and colliders?**
@@ -6303,7 +7129,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 495
+## Question 417
 - [ ] Done
 
 **In operations research, how do you establish causal relationships in complex business processes?**
@@ -6312,7 +7138,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 496
+## Question 418
 - [ ] Done
 
 **What are the limitations of using machine learning algorithms for causal inference?**
@@ -6321,7 +7147,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 497
+## Question 419
 - [ ] Done
 
 **How do you design studies to maximize causal inference while maintaining practical feasibility?**
@@ -6330,7 +7156,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 498
+## Question 420
 - [ ] Done
 
 **In policy evaluation, how do you distinguish between correlation and causation when assessing intervention effectiveness?**
@@ -6339,7 +7165,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 499
+## Question 421
 - [ ] Done
 
 **How do you explain Bayes' theorem and its practical applications in business decision-making?**
@@ -6348,7 +7174,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 500
+## Question 422
 - [ ] Done
 
 **What's the difference between prior, likelihood, and posterior distributions in Bayesian analysis?**
@@ -6357,7 +7183,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 501
+## Question 423
 - [ ] Done
 
 **How do you choose appropriate prior distributions when you have limited historical data?**
@@ -6366,7 +7192,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 502
+## Question 424
 - [ ] Done
 
 **In medical diagnosis, how do you use Bayesian inference to update disease probabilities based on test results?**
@@ -6375,7 +7201,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 503
+## Question 425
 - [ ] Done
 
 **What are conjugate priors and why are they useful in Bayesian analysis?**
@@ -6384,7 +7210,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 504
+## Question 426
 - [ ] Done
 
 **How do you use Markov Chain Monte Carlo (MCMC) methods to sample from complex posterior distributions?**
@@ -6393,7 +7219,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 505
+## Question 427
 - [ ] Done
 
 **In A/B testing, how does Bayesian inference differ from frequentist hypothesis testing?**
@@ -6402,7 +7228,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 506
+## Question 428
 - [ ] Done
 
 **What are credible intervals and how do they differ from confidence intervals?**
@@ -6411,7 +7237,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 507
+## Question 429
 - [ ] Done
 
 **How do you handle model uncertainty using Bayesian model averaging?**
@@ -6420,7 +7246,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 508
+## Question 430
 - [ ] Done
 
 **In machine learning, how do you apply Bayesian inference to regularization and feature selection?**
@@ -6429,7 +7255,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 509
+## Question 431
 - [ ] Done
 
 **How do you use non-informative or weakly informative priors when prior knowledge is limited?**
@@ -6438,7 +7264,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 510
+## Question 432
 - [ ] Done
 
 **What's the role of the likelihood function in updating beliefs in Bayesian inference?**
@@ -6447,7 +7273,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 511
+## Question 433
 - [ ] Done
 
 **How do you assess convergence in MCMC chains and ensure reliable posterior estimates?**
@@ -6456,7 +7282,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 512
+## Question 434
 - [ ] Done
 
 **In finance, how do you use Bayesian methods to update risk assessments based on new market data?**
@@ -6465,7 +7291,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 513
+## Question 435
 - [ ] Done
 
 **What are hierarchical Bayesian models and when are they appropriate to use?**
@@ -6474,7 +7300,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 514
+## Question 436
 - [ ] Done
 
 **How do you perform Bayesian hypothesis testing using Bayes factors?**
@@ -6483,7 +7309,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 515
+## Question 437
 - [ ] Done
 
 **In quality control, how do you use Bayesian updating to improve process monitoring?**
@@ -6492,7 +7318,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 516
+## Question 438
 - [ ] Done
 
 **What are the computational challenges in Bayesian inference and how do you address them?**
@@ -6501,7 +7327,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 517
+## Question 439
 - [ ] Done
 
 **How do you use empirical Bayes methods when you have many similar estimation problems?**
@@ -6510,7 +7336,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 518
+## Question 440
 - [ ] Done
 
 **In clinical trials, how do you design adaptive trials using Bayesian interim analysis?**
@@ -6519,7 +7345,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 519
+## Question 441
 - [ ] Done
 
 **How do you handle prior elicitation from domain experts in practical Bayesian applications?**
@@ -6528,7 +7354,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 520
+## Question 442
 - [ ] Done
 
 **What's the difference between Maximum A Posteriori (MAP) and full Bayesian inference?**
@@ -6537,7 +7363,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 521
+## Question 443
 - [ ] Done
 
 **How do you use variational inference as an alternative to MCMC for approximate Bayesian computation?**
@@ -6546,7 +7372,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 522
+## Question 444
 - [ ] Done
 
 **In marketing analytics, how do you use Bayesian methods to personalize customer recommendations?**
@@ -6555,7 +7381,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 523
+## Question 445
 - [ ] Done
 
 **What are the philosophical differences between Bayesian and frequentist approaches to statistics?**
@@ -6564,7 +7390,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 524
+## Question 446
 - [ ] Done
 
 **How do you perform Bayesian linear regression and interpret the results?**
@@ -6573,7 +7399,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 525
+## Question 447
 - [ ] Done
 
 **In time-series forecasting, how do you use Bayesian methods to quantify prediction uncertainty?**
@@ -6582,7 +7408,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 526
+## Question 448
 - [ ] Done
 
 **What are the advantages and disadvantages of Bayesian methods compared to classical statistics?**
@@ -6591,7 +7417,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 527
+## Question 449
 - [ ] Done
 
 **How do you use Bayesian networks to model complex probabilistic relationships?**
@@ -6600,7 +7426,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 528
+## Question 450
 - [ ] Done
 
 **In environmental monitoring, how do you use Bayesian updating to assess pollution levels?**
@@ -6609,7 +7435,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 529
+## Question 451
 - [ ] Done
 
 **How do you implement Gibbs sampling for multivariate Bayesian models?**
@@ -6618,7 +7444,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 530
+## Question 452
 - [ ] Done
 
 **What's the role of hyperparameters in Bayesian hierarchical models?**
@@ -6627,7 +7453,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 531
+## Question 453
 - [ ] Done
 
 **How do you use Bayesian model selection criteria like WAIC and LOO?**
@@ -6636,7 +7462,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 532
+## Question 454
 - [ ] Done
 
 **In sports analytics, how do you use Bayesian methods to predict player performance?**
@@ -6645,7 +7471,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 533
+## Question 455
 - [ ] Done
 
 **What are mixture models and how do you fit them using Bayesian methods?**
@@ -6654,7 +7480,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 534
+## Question 456
 - [ ] Done
 
 **How do you handle missing data in Bayesian analysis?**
@@ -6663,7 +7489,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 535
+## Question 457
 - [ ] Done
 
 **In survey research, how do you use Bayesian methods to account for non-response bias?**
@@ -6672,7 +7498,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 536
+## Question 458
 - [ ] Done
 
 **What are the challenges of communicating Bayesian results to non-technical stakeholders?**
@@ -6681,7 +7507,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 537
+## Question 459
 - [ ] Done
 
 **How do you use Approximate Bayesian Computation (ABC) when the likelihood is intractable?**
@@ -6690,7 +7516,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 538
+## Question 460
 - [ ] Done
 
 **In manufacturing, how do you use Bayesian reliability analysis for equipment maintenance?**
@@ -6699,7 +7525,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 539
+## Question 461
 - [ ] Done
 
 **How do you perform sensitivity analysis to assess the impact of prior assumptions?**
@@ -6708,7 +7534,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 540
+## Question 462
 - [ ] Done
 
 **What's the role of exchangeability in Bayesian modeling?**
@@ -6717,7 +7543,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 541
+## Question 463
 - [ ] Done
 
 **How do you use Bayesian optimization for hyperparameter tuning in machine learning?**
@@ -6726,7 +7552,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 542
+## Question 464
 - [ ] Done
 
 **In epidemiology, how do you use Bayesian methods to model disease spread?**
@@ -6735,7 +7561,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 543
+## Question 465
 - [ ] Done
 
 **What are the differences between informative, weakly informative, and non-informative priors?**
@@ -6744,7 +7570,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 544
+## Question 466
 - [ ] Done
 
 **How do you implement Hamiltonian Monte Carlo (HMC) for efficient Bayesian computation?**
@@ -6753,7 +7579,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 545
+## Question 467
 - [ ] Done
 
 **In psychology research, how do you use Bayesian methods to analyze experimental data?**
@@ -6762,7 +7588,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 546
+## Question 468
 - [ ] Done
 
 **What are the ethical considerations in choosing priors for Bayesian analysis?**
@@ -6771,7 +7597,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 547
+## Question 469
 - [ ] Done
 
 **How do you use Bayesian meta-analysis to combine evidence from multiple studies?**
@@ -6780,7 +7606,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 548
+## Question 470
 - [ ] Done
 
 **In decision theory, how do you combine Bayesian inference with utility functions for optimal decision-making?**
@@ -6792,7 +7618,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 549
+## Question 471
 - [ ] Done
 
 **How do you interpret a portfolio with mean return of 8% and standard deviation of 15% vs. one with 8% and 5%?**
@@ -6801,7 +7627,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 550
+## Question 472
 - [ ] Done
 
 **When would you use sample standard deviation vs. population standard deviation in real-world analysis?**
@@ -6810,7 +7636,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 551
+## Question 473
 - [ ] Done
 
 **How does the choice of degrees of freedom (n vs. n-1) affect standard deviation calculations in small samples?**
@@ -6819,7 +7645,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 552
+## Question 474
 - [ ] Done
 
 **In quality control, how do you use the 68-95-99.7 rule to set acceptable tolerance limits?**
@@ -6828,7 +7654,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 553
+## Question 475
 - [ ] Done
 
 **How do you calculate and interpret the coefficient of variation to compare variability across different units?**
@@ -6837,7 +7663,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 554
+## Question 476
 - [ ] Done
 
 **What happens to variance when you apply linear transformations (scaling and shifting) to your data?**
@@ -6846,7 +7672,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 555
+## Question 477
 - [ ] Done
 
 **In A/B testing, how do you use pooled variance to compare the variability between test groups?**
@@ -6855,7 +7681,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 556
+## Question 478
 - [ ] Done
 
 **How do you handle calculating variance for grouped frequency data?**
@@ -6864,7 +7690,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 557
+## Question 479
 - [ ] Done
 
 **When analyzing time-series data, how do you distinguish between short-term variance and long-term trends?**
@@ -6873,7 +7699,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 558
+## Question 480
 - [ ] Done
 
 **How do you use variance decomposition to understand the sources of variability in hierarchical data?**
@@ -6882,7 +7708,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 559
+## Question 481
 - [ ] Done
 
 **In machine learning, how does high variance in features affect model performance and what can you do about it?**
@@ -6891,7 +7717,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 560
+## Question 482
 - [ ] Done
 
 **How do you calculate the variance of a portfolio containing multiple assets with known correlations?**
@@ -6900,7 +7726,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 561
+## Question 483
 - [ ] Done
 
 **What's the relationship between variance and the spread of data in different distribution shapes?**
@@ -6909,7 +7735,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 562
+## Question 484
 - [ ] Done
 
 **How do you use Levene's test to check for equality of variances across groups before applying statistical tests?**
@@ -6918,7 +7744,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 563
+## Question 485
 - [ ] Done
 
 **In experimental design, how do you minimize within-group variance while maximizing between-group variance?**
@@ -6927,7 +7753,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 564
+## Question 486
 - [ ] Done
 
 **How do you calculate and interpret the mean absolute deviation as an alternative measure of spread?**
@@ -6936,7 +7762,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 565
+## Question 487
 - [ ] Done
 
 **When should you use robust measures of variability instead of standard deviation?**
@@ -6945,7 +7771,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 566
+## Question 488
 - [ ] Done
 
 **How do you handle outliers when calculating variance and what impact do they have?**
@@ -6954,7 +7780,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 567
+## Question 489
 - [ ] Done
 
 **In business metrics, how do you use variance to assess the predictability and reliability of performance?**
@@ -6963,7 +7789,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 568
+## Question 490
 - [ ] Done
 
 **How do you calculate the variance of a linear combination of random variables?**
@@ -6972,7 +7798,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 569
+## Question 491
 - [ ] Done
 
 **What's the difference between explained variance and unexplained variance in regression analysis?**
@@ -6981,7 +7807,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 570
+## Question 492
 - [ ] Done
 
 **How do you use analysis of variance (ANOVA) to partition total variance into components?**
@@ -6990,7 +7816,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 571
+## Question 493
 - [ ] Done
 
 **In quality assurance, how do you calculate process capability indices using variance measures?**
@@ -6999,7 +7825,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 572
+## Question 494
 - [ ] Done
 
 **How do you interpret and use the variance-to-mean ratio to identify different types of data distributions?**
@@ -7008,7 +7834,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 573
+## Question 495
 - [ ] Done
 
 **When analyzing customer behavior, how do you use variance to identify segments with different preference patterns?**
@@ -7017,7 +7843,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 574
+## Question 496
 - [ ] Done
 
 **How do you calculate confidence intervals for variance estimates and interpret them?**
@@ -7026,7 +7852,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 575
+## Question 497
 - [ ] Done
 
 **In risk management, how do you use historical variance to estimate future risk scenarios?**
@@ -7035,7 +7861,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 576
+## Question 498
 - [ ] Done
 
 **How do you handle heteroscedasticity (unequal variance) in statistical modeling?**
@@ -7044,7 +7870,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 577
+## Question 499
 - [ ] Done
 
 **What's the relationship between sample size and the precision of variance estimates?**
@@ -7053,7 +7879,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 578
+## Question 500
 - [ ] Done
 
 **How do you use the F-test to compare variances between two populations?**
@@ -7062,7 +7888,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 579
+## Question 501
 - [ ] Done
 
 **In process improvement, how do you use variance reduction techniques to enhance quality?**
@@ -7071,7 +7897,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 580
+## Question 502
 - [ ] Done
 
 **How do you calculate the standard error of estimates and relate it to prediction uncertainty?**
@@ -7080,7 +7906,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 581
+## Question 503
 - [ ] Done
 
 **When dealing with non-normal data, how do you assess and report measures of variability?**
@@ -7089,7 +7915,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 582
+## Question 504
 - [ ] Done
 
 **How do you use bootstrapping to estimate the sampling distribution of variance?**
@@ -7098,7 +7924,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 583
+## Question 505
 - [ ] Done
 
 **In survey research, how do you account for variance due to sampling design effects?**
@@ -7107,7 +7933,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 584
+## Question 506
 - [ ] Done
 
 **How do you calculate and interpret the interquartile range as a robust measure of spread?**
@@ -7116,7 +7942,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 585
+## Question 507
 - [ ] Done
 
 **What's the impact of measurement error on variance calculations and how do you adjust for it?**
@@ -7125,7 +7951,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 586
+## Question 508
 - [ ] Done
 
 **How do you use variance components analysis to understand nested or hierarchical data structures?**
@@ -7134,7 +7960,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 587
+## Question 509
 - [ ] Done
 
 **In financial analysis, how do you calculate and interpret the volatility of returns using standard deviation?**
@@ -7143,7 +7969,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 588
+## Question 510
 - [ ] Done
 
 **How do you handle calculating variance for weighted data or observations with different importance?**
@@ -7152,7 +7978,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 589
+## Question 511
 - [ ] Done
 
 **What's the relationship between range and standard deviation, and when might you use each?**
@@ -7161,7 +7987,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 590
+## Question 512
 - [ ] Done
 
 **How do you use the delta method to approximate the variance of functions of random variables?**
@@ -7170,7 +7996,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 591
+## Question 513
 - [ ] Done
 
 **In experimental research, how do you calculate the minimum detectable effect size given variance estimates?**
@@ -7179,7 +8005,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 592
+## Question 514
 - [ ] Done
 
 **How do you interpret and use the variance inflation factor (VIF) in multiple regression?**
@@ -7188,7 +8014,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 593
+## Question 515
 - [ ] Done
 
 **When analyzing performance metrics, how do you distinguish between natural variance and special cause variation?**
@@ -7197,7 +8023,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 594
+## Question 516
 - [ ] Done
 
 **How do you calculate the pooled variance estimate for multiple groups in statistical analysis?**
@@ -7206,7 +8032,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 595
+## Question 517
 - [ ] Done
 
 **In machine learning preprocessing, how do you handle features with very different variances?**
@@ -7215,7 +8041,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 596
+## Question 518
 - [ ] Done
 
 **How do you use variance stabilizing transformations when dealing with heteroscedastic data?**
@@ -7224,7 +8050,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 597
+## Question 519
 - [ ] Done
 
 **What's the difference between within-subject variance and between-subject variance in repeated measures designs?**
@@ -7233,7 +8059,7 @@ for obs in [1, 1, 0, 1, 1, 0, 1, 1]:
 
 ---
 
-## Question 598
+## Question 520
 - [ ] Done
 
 **How do you apply the concept of explained variance to evaluate the goodness of fit in predictive models?**

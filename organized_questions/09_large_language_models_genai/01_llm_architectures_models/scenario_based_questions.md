@@ -1,4 +1,9 @@
 # LLM & ChatGPT Interview Questions - Scenario-Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/26** | **0** | **26** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

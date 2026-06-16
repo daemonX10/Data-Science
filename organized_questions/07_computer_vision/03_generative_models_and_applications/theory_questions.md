@@ -1,4 +1,9 @@
 # Generative Models & CV Applications - Interview Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/361** | **0** | **361** | **0%** |
+<!-- progress-summary:end -->
 
 ## GANs Fundamentals
 

@@ -13,6 +13,12 @@ from sklearn.metrics import silhouette_score
 import numpy as np
 
 # Generate sample data
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/20** | **0** | **20** | **0%** |
+<!-- progress-summary:end -->
+
 from sklearn.datasets import make_blobs
 X, y_true = make_blobs(n_samples=300, centers=4, random_state=42)
 

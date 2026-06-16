@@ -1,7 +1,12 @@
 # Python ML Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **29/124** | **29** | **124** | **23%** |
+<!-- progress-summary:end -->
 
 ## Question 1
-- [ ] Done
+- [x] Done
 
 **Explain the difference between Python 2 and Python 3.**
 
@@ -30,7 +35,7 @@ Always mention that Python 3 is the only choice for production ML work today.
 ---
 
 ## Question 2
-- [ ] Done
+- [x] Done
 
 **How does Python manage memory?**
 
@@ -75,7 +80,7 @@ b.append(a)
 ---
 
 ## Question 3
-- [ ] Done
+- [x] Done
 
 **What is PEP 8 and why is it important?**
 
@@ -106,7 +111,7 @@ PEP 8 is Python's official **style guide** that provides conventions for writing
 ---
 
 ## Question 4
-- [ ] Done
+- [x] Done
 
 **Describe how a dictionary works in Python.**
 
@@ -149,7 +154,7 @@ Mention O(1) average time complexity for lookup, insertion, and deletion.
 ---
 
 ## Question 5
-- [ ] Done
+- [x] Done
 
 **What is list comprehension? Give an example.**
 
@@ -191,7 +196,7 @@ binary_features = [1 if val > threshold else 0 for val in values]
 ---
 
 ## Question 6
-- [ ] Done
+- [x] Done
 
 **Explain generators. How do they differ from list comprehensions?**
 
@@ -239,7 +244,7 @@ for num in count_up_to(5):
 ---
 
 ## Question 7
-- [ ] Done
+- [x] Done
 
 **How does Python's garbage collection work?**
 
@@ -272,7 +277,7 @@ Reference counting handles ~95% of garbage; cyclic GC handles the edge cases.
 ---
 
 ## Question 8
-- [ ] Done
+- [x] Done
 
 **What are decorators? Provide an example.**
 
@@ -320,7 +325,7 @@ process_data(100)
 ---
 
 ## Question 9
-- [ ] Done
+- [x] Done
 
 **What is NumPy and how is it useful in ML?**
 
@@ -362,7 +367,7 @@ NumPy is the foundation; Pandas, scikit-learn, TensorFlow all build on top of it
 ---
 
 ## Question 10
-- [ ] Done
+- [x] Done
 
 **How does Scikit-learn fit into the ML workflow?**
 
@@ -400,7 +405,7 @@ Scikit-learn is for traditional ML (not deep learning). For neural networks, use
 ---
 
 ## Question 11
-- [ ] Done
+- [x] Done
 
 **Explain Matplotlib and Seaborn for data visualization.**
 
@@ -441,7 +446,7 @@ Use Seaborn for quick EDA, then Matplotlib for final customization.
 ---
 
 ## Question 12
-- [ ] Done
+- [x] Done
 
 **What is TensorFlow and Keras? How do they relate?**
 
@@ -488,7 +493,7 @@ For most practitioners, `tf.keras` is the recommended approach—Keras simplicit
 # --- Missing Questions Restored from Source (Q13-Q40) ---
 
 ## Question 13
-- [ ] Done
+- [x] Done
 
 **Explain the process of data cleaning and why it's important in machine learning.**
 
@@ -551,7 +556,7 @@ Always mention that data cleaning typically consumes **60-80% of a data scientis
 ---
 
 ## Question 14
-- [ ] Done
+- [x] Done
 
 **What are the common steps involved in data preprocessing for a machine learning model?**
 
@@ -614,7 +619,7 @@ Stress that **scaling should be fit only on training data** and then applied to 
 ---
 
 ## Question 15
-- [ ] Done
+- [x] Done
 
 **Describe the concept of feature scaling and why it is necessary.**
 
@@ -668,7 +673,7 @@ Always clarify: "Fit the scaler on training data only, then transform both train
 ---
 
 ## Question 16
-- [ ] Done
+- [x] Done
 
 **Explain the difference between label encoding and one-hot encoding.**
 
@@ -726,7 +731,7 @@ Mention `drop='first'` (or `drop_first=True` in pandas) to avoid the **dummy var
 ---
 
 ## Question 17
-- [ ] Done
+- [x] Done
 
 **What is the purpose of data splitting into train, validation, and test sets?**
 
@@ -779,7 +784,7 @@ Always mention **stratification** (`stratify=y`) for classification tasks to mai
 ---
 
 ## Question 18
-- [ ] Done
+- [x] Done
 
 **Describe the process of building a machine learning model in Python.**
 
@@ -844,7 +849,7 @@ Emphasize using **sklearn Pipelines** to chain preprocessing and modeling. This 
 ---
 
 ## Question 19
-- [ ] Done
+- [x] Done
 
 **Explain cross-validation and where it fits in the model training process.**
 
@@ -910,7 +915,7 @@ Cross-validation is used during **model selection and hyperparameter tuning**, n
 ---
 
 ## Question 20
-- [ ] Done
+- [x] Done
 
 **What is the bias-variance tradeoff in machine learning?**
 
@@ -972,7 +977,7 @@ Use the analogy: "Bias is like consistently shooting left of the target (systema
 ---
 
 ## Question 21
-- [ ] Done
+- [x] Done
 
 **Describe the steps taken to improve a model's accuracy.**
 
@@ -1037,7 +1042,7 @@ Always start with a **simple baseline**, then iterate. Mention that the biggest 
 ---
 
 ## Question 22
-- [ ] Done
+- [x] Done
 
 **What are hyperparameters, and how do you tune them?**
 
@@ -1108,7 +1113,7 @@ Mention that **Random Search is preferred** over Grid Search for large hyperpara
 ---
 
 ## Question 23
-- [ ] Done
+- [x] Done
 
 **What is a confusion matrix, and how is it interpreted?**
 
@@ -1174,7 +1179,7 @@ Always mention that **accuracy alone is misleading for imbalanced datasets**. If
 ---
 
 ## Question 24
-- [ ] Done
+- [x] Done
 
 **Explain the ROC curve and the area under the curve (AUC) metric.**
 
@@ -1242,7 +1247,7 @@ Emphasize that ROC-AUC uses **probability scores** (`predict_proba`), not hard p
 ---
 
 ## Question 25
-- [ ] Done
+- [x] Done
 
 **Explain different validation strategies, such as k-fold cross-validation.**
 
@@ -1312,7 +1317,7 @@ Always specify **why** you chose a particular strategy: "I use Stratified K-Fold
 ---
 
 ## Question 26
-- [ ] Done
+- [x] Done
 
 **Describe steps to take when a model performs well on the training data but poorly on new data.**
 
@@ -1386,7 +1391,7 @@ Always frame overfitting in terms of the **bias-variance tradeoff**: "The model 
 ---
 
 ## Question 27
-- [ ] Done
+- [x] Done
 
 **Explain the use of regularization in linear models and provide a Python example.**
 
@@ -1451,7 +1456,7 @@ Always mention that **features must be scaled before regularization** because th
 ---
 
 ## Question 28
-- [ ] Done
+- [x] Done
 
 **What are the advantages of using Stochastic Gradient Descent over standard Gradient Descent?**
 
@@ -1530,7 +1535,7 @@ In practice, **mini-batch GD** (batch size 32–256) is the most common choice a
 ---
 
 ## Question 29
-- [ ] Done
+- [x] Done
 
 **What is dimensionality reduction, and when would you use it?**
 

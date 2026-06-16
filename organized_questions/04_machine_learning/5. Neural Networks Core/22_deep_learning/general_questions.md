@@ -1,4 +1,9 @@
 # Deep Learning Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/17** | **0** | **17** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: Define deep learning and how it differs from other ML approaches
 - [ ] Done

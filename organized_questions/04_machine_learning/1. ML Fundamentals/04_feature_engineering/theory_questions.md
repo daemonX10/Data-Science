@@ -1,4 +1,9 @@
 # Feature Engineering Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/121** | **0** | **121** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: What is feature engineering and why is it important in machine learning?
 - [ ] Done

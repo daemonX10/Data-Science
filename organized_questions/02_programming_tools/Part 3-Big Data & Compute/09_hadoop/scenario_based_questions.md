@@ -1,4 +1,9 @@
 # Hadoop Interview Questions - Scenario Based Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/13** | **0** | **13** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

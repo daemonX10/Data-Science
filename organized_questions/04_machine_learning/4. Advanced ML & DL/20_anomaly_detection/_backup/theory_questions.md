@@ -1,4 +1,9 @@
 # Anomaly Detection Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/75** | **0** | **75** | **0%** |
+<!-- progress-summary:end -->
 
 ---
 

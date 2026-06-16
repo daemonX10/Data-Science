@@ -1,4 +1,9 @@
 # Data Scientist Interview Questions - Coding Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/1** | **0** | **1** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

@@ -1,4 +1,9 @@
 # Ml Design Patterns Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/37** | **0** | **37** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

@@ -1,4 +1,9 @@
 # Linear Regression Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/148** | **0** | **148** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: What is linear regression and how is it used in predictive modeling?
 - [ ] Done

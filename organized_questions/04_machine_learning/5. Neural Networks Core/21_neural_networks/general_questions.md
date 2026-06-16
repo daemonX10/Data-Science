@@ -1,4 +1,9 @@
 # Neural Networks Interview Questions - General Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/22** | **0** | **22** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1: Elaborate on the structure of a basic artificial neuron
 - [ ] Done

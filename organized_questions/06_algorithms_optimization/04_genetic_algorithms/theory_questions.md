@@ -1,4 +1,9 @@
 # Genetic Algorithms Interview Questions - Theory Questions
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/30** | **0** | **30** | **0%** |
+<!-- progress-summary:end -->
 
 ## Question 1
 - [ ] Done

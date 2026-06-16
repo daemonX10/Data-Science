@@ -41,6 +41,12 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 # Load data
+<!-- progress-summary:start -->
+| Progress | Done | Total | % |
+|:--------:|----:|------:|--:|
+| **0/98** | **0** | **98** | **0%** |
+<!-- progress-summary:end -->
+
 X, y = load_iris(return_X_y=True)
 
 # Split: 80% train, 20% test
